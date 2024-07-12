@@ -1,0 +1,14 @@
+.w-icon-whatsapp i {
+    color : #FFFFFF;
+}
+
+/* If you're using FontAwesome 6 */
+.w-icon-tiktok i {
+    color : #000000;
+}
+
+@media only screen and (max-width: 767px) {
+    .category-products .banner {
+        background-size: contain !important;
+    }
+}
