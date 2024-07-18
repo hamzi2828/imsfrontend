@@ -3,7 +3,39 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/style.min.css') }}">
     @endpush
     @include('partials._topbar')
-    
+    <style>
+        .widget-body ul {
+           list-style: none;
+           padding-left: 20px;
+       }
+       
+       .widget-body ul ul {
+           display: none;
+       }
+       
+       .widget-body li.open > ul {
+           display: block;
+       }
+       
+       .arrow {
+           display: inline-block;
+           width: 0;
+           height: 0;
+           border-style: solid;
+           border-width: 5px 5px 0 5px;
+           border-color: #000 transparent transparent transparent;
+           margin-left: 5px; /* Adjust spacing as needed */
+           transition: transform 0.3s ease; /* Optional: add transition for smooth animation */
+       }
+       
+       .arrow.open {
+           transform: rotate(180deg); /* Rotate arrow for open state */
+       }
+       
+       
+       
+       
+       </style>
     <main class="main mt-5">
         <!-- Start of Page Content -->
         <div class="page-content">
@@ -28,7 +60,7 @@
                                 <!-- Start of Collapsible widget -->
                                 <div class="widget widget-collapsible">
                                     <h3 class="widget-title"><span>All Categories</span></h3>
-                                    <ul class="widget-body filter-items search-ul">
+                                    {{-- <ul class="widget-body filter-items search-ul">
                                         @php $existingParams = request () -> query (); @endphp
                                         @if(count ($categories) > 0)
                                             @foreach($categories as $category)
@@ -44,7 +76,52 @@
                                                 </li>
                                             @endforeach
                                         @endif
+                                    </ul> --}}
+
+
+        
+                                    <ul class="widget-body filter-items search-ul">
+                                        @php $existingParams = request()->query(); @endphp
+                                        @if (count($categories) > 0)
+                                            @foreach ($categories as $category)
+                                                @if ($category->parent_id == null)
+                                                    @php $queryParams = array_merge($existingParams, ['category' => $category->slug]); @endphp
+                                                    <li style="{{ request('category') == $category->slug ? 'font-weight: 700' : '' }}">
+                                                        <a href="{{ route('products.index', $queryParams) }}">
+                                                            {{ $category->title }}
+                                                        </a>
+                                                        @if ($category->subcategories->count() > 0)
+                                                            <ul>
+                                                                @foreach ($category->subcategories as $subCategory)
+                                                                    @php $subQueryParams = array_merge($existingParams, ['category' => $subCategory->slug]); @endphp
+                                                                    <li style="{{ request('category') == $subCategory->slug ? 'font-weight: 700' : '' }}">
+                                                                        <a href="{{ route('products.index', $subQueryParams) }}">
+                                                                            {{ $subCategory->title }}
+                                                                        </a>
+                                                                        @if ($subCategory->subcategories->count() > 0)
+                                                                            <ul class="child-ul">
+                                                                                @foreach ($subCategory->subcategories as $childCategory)
+                                                                                    @php $childQueryParams = array_merge($existingParams, ['category' => $childCategory->slug]); @endphp
+                                                                                    <li style="{{ request('category') == $childCategory->slug ? 'font-weight: 700' : '' }}">
+                                                                                        <a href="{{ route('products.index', $childQueryParams) }}">
+                                                                                            {{ $childCategory->title }}
+                                                                                        </a>
+                                                                                    </li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        @endif
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </ul>
+                                    
+
+
                                 </div>
                                 <!-- End of Collapsible Widget -->
                                 
@@ -178,5 +255,41 @@
         <!-- End of Page Content -->
     </main>
     
+    <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.widget-body > li').forEach(parentLi => {
+        let parentLink = parentLi.querySelector('a');
+        let childUl = parentLi.querySelector('ul');
+
+        if (childUl) {
+            // Create arrow element
+                    let arrow = document.createElement('span');
+            arrow.className = 'arrow';
+            parentLink.appendChild(arrow);
+
+            // Hide all child ULs initially
+            childUl.style.display = 'none';
+
+            // Add click event listener
+            parentLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                parentLi.classList.toggle('open');
+                childUl.style.display = childUl.style.display === 'block' ? 'none' : 'block';
+                arrow.classList.toggle('open');
+            });
+
+            // Open second child by default
+            let secondChildUl = childUl.querySelector('ul.child-ul');
+            if (secondChildUl) {
+                childUl.style.display = 'block'; // Open first level UL
+                arrow.classList.add('open'); // Add open arrow icon
+                secondChildUl.style.display = 'block'; // Open second level UL
+            }
+        }
+    });
+});
+
+    </script>
     @include('partials._footer')
 </x-home>

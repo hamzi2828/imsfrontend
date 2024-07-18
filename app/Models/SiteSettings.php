@@ -11,7 +11,13 @@
         protected $guarded = [];
         protected $table   = 'site_settings';
 
-        public function getSettingsAttribute ( $value ) {
+        // public function getSettingsAttribute ( $value ) {
+        //     return json_decode ( $value );
+        // }
+     
+    
+        public function getSettingsAttribute($value) {
             return json_decode ( $value );
+            return json_decode($value, true); // Decode as associative array
         }
     }
