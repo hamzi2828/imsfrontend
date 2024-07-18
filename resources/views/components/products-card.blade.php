@@ -32,6 +32,7 @@
                         title="Quick View"></a>
                     @endif
             </div>
+            
         </figure>
         <div class="product-details">
             <div class="product-cat">
