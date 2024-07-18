@@ -8,11 +8,14 @@
     use App\Services\ProductService;
     use Illuminate\Contracts\View\View;
     use Illuminate\Http\Request;
+    use App\Models\SiteSettings;
+
     use Illuminate\Support\Facades\Cache;
     
     class HomeController extends Controller {
         
         public function index (): View {
+          
             $data[ 'title' ]      = 'Home';
             $data[ 'categories' ] = collect ( ( new CategoryService() ) -> all () ) -> take ( 11 );
             
@@ -37,14 +40,29 @@
                 } ) -> take ( 4 );
             }
             
-            $data[ 'category_products' ] = collect ( ( new CategoryService() ) -> category_products () ) -> take ( 4 );
-            if ( optional ( siteSettings () -> settings ) -> display_out_of_stock_products == '0' ) {
-                $data[ 'category_products' ] = collect ( ( new CategoryService() ) -> category_products () ) -> filter ( function ( $categories ) {
-                    return $categories -> products -> filter ( function ( $product ) {
-                        return $product -> available_quantity () > 0;
-                    } );
-                } ) -> take ( 4 );
-            }
+            // $data[ 'category_products' ] = collect ( ( new CategoryService() ) -> category_products () ) -> take ( 4 );
+            // if ( optional ( siteSettings () -> settings ) -> display_out_of_stock_products == '0' ) {
+            //     $data[ 'category_products' ] = collect ( ( new CategoryService() ) -> category_products () ) -> filter ( function ( $categories ) {
+            //         return $categories -> products -> filter ( function ( $product ) {
+            //             return $product -> available_quantity () > 0;
+            //         } );
+            //     } ) -> take ( 4 );
+               
+            // }
+            $data['category_products'] = collect((new CategoryService())->category_products())->map(function ($category) {
+                if (optional(siteSettings()->settings)->display_out_of_stock_products == '0') {
+                    // Filter out products with available_quantity() == 0
+                    $category->products = $category->products->filter(function ($product) {
+                        return $product->available_quantity() > 0;
+                    })->take(4); // Limit to 4 products after filtering
+                } else {
+                    // Otherwise, take the first 4 products directly
+                    $category->products = $category->products->take(4);
+                }
+                return $category;
+            });
+            
+           
             
             $data[ 'newArrivals' ] = collect ( ( new ProductService() ) -> new_arrivals () ) -> take ( 10 );
             if ( optional ( siteSettings () -> settings ) -> display_out_of_stock_products == '0' ) {
