@@ -233,15 +233,22 @@
                             </nav>
                         </form>
                         <div class="product-wrapper row {{ (request ('view') == 'list' || !request ('view')) ? 'cols-md-1 cols-xs-2 cols-1' : 'cols-md-3 cols-sm-2 cols-2' }}">
-                            @if(count ($products) > 0)
-                                @foreach($products as $product)
-                                    @if((request ('view') == 'list' || !request ('view')))
-                                        <x-products-list :product="$product"></x-products-list>
-                                    @else
-                                        <x-products-card :product="$product"></x-products-card>
-                                    @endif
-                                @endforeach
-                            @endif
+                            @if (count($products) > 0)
+                            @foreach ($products as $product)
+                                @if ($product->available_quantity() == 0 || $product->available_quantity() > 0   )
+                                @if ($product->available_quantity() == 0 && $displayOutOfStockProducts != 1)
+                                    @continue
+                                    <!-- Skip to the next iteration if out of stock products should not be displayed -->
+                                @endif
+
+                                @if (request('view') == 'list' || !request('view'))
+                                    <x-products-list :product="$product"></x-products-list>
+                                @else
+                                    <x-products-card :product="$product"></x-products-card>
+                                @endif
+                                @endif
+                            @endforeach
+                        @endif
                         </div>
                         <div class="toolbox toolbox-pagination justify-content-between">
                             {!! $products -> onEachSide(5) -> appends(request() -> query()) -> links('shop.pagination') !!}
