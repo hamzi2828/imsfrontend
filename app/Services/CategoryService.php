@@ -91,7 +91,7 @@
                 $html = '<li class="has-submenu">';
                 if (count($categories) > 0) {
                     foreach ($categories as $category) {
-                        if ($category->trashed()) {
+                        if ($category->trashed() || $category->status === 'inactive') {
                             continue; // Skip soft-deleted categories
                         }
                         $html .= '<li>';
@@ -114,7 +114,7 @@
                 $html = '<ul class="' . $class . '">';
                 if (count($category->subcategories) > 0) {
                     foreach ($category->subcategories as $subCategory) {
-                        if ($subCategory->trashed()) {
+                        if ($subCategory->trashed() || $category->status === 'inactive') {
                             continue; // Skip soft-deleted subcategories
                         }
                         $html .= '<li>';
