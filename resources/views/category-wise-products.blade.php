@@ -81,7 +81,7 @@
         $count = 0; // Initialize counter
     @endphp
     @foreach($category_products as $category)
-        @if($count >= 12)
+        @if($count >= 11)
             @break // Stop after 12 iterations
         @endif
 

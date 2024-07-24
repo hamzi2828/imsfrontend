@@ -152,7 +152,7 @@
                                         continue; // Skip soft-deleted categories
                                     }
 
-                                    if ($count >= 12) {
+                                    if ($count >= 11) {
                                         break; // Stop after 12 iterations
                                     }
 
