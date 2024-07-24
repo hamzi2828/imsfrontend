@@ -87,27 +87,28 @@
 
 
 
-            public function generateMenu($categories): string {
-                $html = '<li class="has-submenu">';
-                if (count($categories) > 0) {
-                    foreach ($categories as $category) {
-                        if ($category->trashed() || $category->status === 'inactive') {
-                            continue; // Skip soft-deleted categories
-                        }
-                        $html .= '<li>';
-                        $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
-                        $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
-                        $html .= '</a>';
+            // public function generateMenu($categories): string {
+                
+            //     $html = '<li class="has-submenu">';
+            //     if (count($categories) > 0) {
+            //         foreach ($categories as $category) {
+            //             if ($category->trashed() || $category->status === 'inactive') {
+            //                 continue; // Skip soft-deleted categories
+            //             }
+            //             $html .= '<li>';
+            //             $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
+            //             $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
+            //             $html .= '</a>';
 
-                        if (count($category->subcategories) > 0) {
-                            $html .= $this->subMenu($category);
-                        }
+            //             if (count($category->subcategories) > 0) {
+            //                 $html .= $this->subMenu($category);
+            //             }
 
-                        $html .= '</li>';
-                    }
-                }
-                return $html;
-            }
+            //             $html .= '</li>';
+            //         }
+            //     }
+            //     return $html;
+            // }
 
 
             // public function subMenu($category, $class = 'megamenu'): string {
@@ -139,6 +140,40 @@
 
             //     return $html;
             // }
+
+                                    
+                                public function generateMenu($categories): string {
+                                $html = '<li class="has-submenu">';
+                                $count = 0;
+
+                                if (count($categories) > 0) {
+                                foreach ($categories as $category) {
+                                    if ($category->trashed() || $category->status === 'inactive') {
+                                        continue; // Skip soft-deleted categories
+                                    }
+
+                                    if ($count >= 12) {
+                                        break; // Stop after 12 iterations
+                                    }
+
+                                    $html .= '<li>';
+                                    $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
+                                    $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
+                                    $html .= '</a>';
+
+                                    if (count($category->subcategories) > 0) {
+                                        $html .= $this->subMenu($category);
+                                    }
+
+                                    $html .= '</li>';
+
+                                    $count++;
+                                }
+                                }
+
+                                return $html;
+                                }
+
 
             public function subMenu($category, $class = 'megamenu'): string {
                 // Skip inactive categories at the top level

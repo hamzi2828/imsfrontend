@@ -77,7 +77,14 @@
 
 
 @if(count($category_products) > 0)
+    @php
+        $count = 0; // Initialize counter
+    @endphp
     @foreach($category_products as $category)
+        @if($count >= 12)
+            @break // Stop after 12 iterations
+        @endif
+
         @if($category->status === 'active' && !$category->trashed()) <!-- Check if the category is active and not soft-deleted -->
             <div class="product-wrapper-1 appear-animate mb-5 category-products">
                 <div class="title-link-wrapper pb-1 mb-4">
@@ -118,6 +125,7 @@
                             <div class="swiper-wrapper row cols-xl-4 cols-lg-3 cols-2">
                                 @if(count($category->products) > 0)
                                     @foreach($category->products as $categoryProduct)
+                                        @if($loop->iteration > 12) @break @endif
                                         <div class="swiper-slide product-col">
                                             <div class="product-wrap product text-center">
                                                 <figure class="product-media">
@@ -152,5 +160,9 @@
                 </div>
             </div>
         @endif
+
+        @php
+            $count++; // Increment counter
+        @endphp
     @endforeach
 @endif
