@@ -110,36 +110,71 @@
             }
 
 
+            // public function subMenu($category, $class = 'megamenu'): string {
+                
+            //     $html = '<ul class="' . $class . '">';
+            //     if (count($category->subcategories) > 0) {
+            //         foreach ($category->subcategories as $subCategory) {
+            //             if ($subCategory->trashed() || $category->status === 'inactive') {
+            //                 continue; // Skip soft-deleted subcategories
+            //             }
+            //             $html .= '<li>';
+
+            //             $html .= '<a href="' . route('products.index', ['category' => $subCategory->slug]) . '">';
+            //             if (!empty(trim($subCategory->icon))) {
+            //                 $html .= '<i class="' . $subCategory->icon . '"></i>';
+            //             }
+            //             $html .= $subCategory->title;
+            //             $html .= '</a>';
+
+            //             if (count($subCategory->subcategories) > 0) {
+            //                 $html .= '<hr class="divider">';
+            //                 $html .= $this->subMenu($subCategory, '');
+            //             }
+
+            //             $html .= '</li>';
+            //         }
+            //     }
+            //     $html .= '</ul>';
+
+            //     return $html;
+            // }
+
             public function subMenu($category, $class = 'megamenu'): string {
+                // Skip inactive categories at the top level
+                if ($category->status === 'inactive') {
+                    return ''; // Return an empty string if the category is inactive
+                }
+            
                 $html = '<ul class="' . $class . '">';
                 if (count($category->subcategories) > 0) {
                     foreach ($category->subcategories as $subCategory) {
-                        if ($subCategory->trashed() || $category->status === 'inactive') {
-                            continue; // Skip soft-deleted subcategories
+                        // Skip soft-deleted or inactive subcategories
+                        if ($subCategory->trashed() || $subCategory->status === 'inactive') {
+                            continue;
                         }
                         $html .= '<li>';
-
+            
                         $html .= '<a href="' . route('products.index', ['category' => $subCategory->slug]) . '">';
                         if (!empty(trim($subCategory->icon))) {
                             $html .= '<i class="' . $subCategory->icon . '"></i>';
                         }
                         $html .= $subCategory->title;
                         $html .= '</a>';
-
+            
                         if (count($subCategory->subcategories) > 0) {
                             $html .= '<hr class="divider">';
                             $html .= $this->subMenu($subCategory, '');
                         }
-
+            
                         $html .= '</li>';
                     }
                 }
                 $html .= '</ul>';
-
+            
                 return $html;
             }
-
-
+            
 
         public function getAllChildCategories ( $categoryId ): array {
             $childCategories      = $this -> getChildCategories ( $categoryId );
