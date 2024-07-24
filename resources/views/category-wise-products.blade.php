@@ -84,8 +84,8 @@
         @if($count >= 11)
             @break // Stop after 12 iterations
         @endif
-
-        @if($category->status === 'active' && !$category->trashed()) <!-- Check if the category is active and not soft-deleted -->
+        @if($category->parent_id === null && $category->status === 'active' && !$category->trashed()) 
+          {{-- @if($category->status === 'active' && !$category->trashed()) <!-- Check if the category is active and not soft-deleted --> --}}
             <div class="product-wrapper-1 appear-animate mb-5 category-products">
                 <div class="title-link-wrapper pb-1 mb-4">
                     <h2 class="title ls-normal mb-0">
