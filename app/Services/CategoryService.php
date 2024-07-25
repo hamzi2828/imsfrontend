@@ -252,7 +252,7 @@
                 $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
                 $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
                 if ($hasSubcategories) {
-                    // $html .= '<span class="submenu-arrow"></span>'; // Add arrow for categories with subcategories
+                    $html .= '<span class="submenu-arrow"></span>'; // Add arrow for categories with subcategories
                 }
                 $html .= '</a>';
         

@@ -27,7 +27,19 @@
     .toggle-btn {
         display: none;
     }
-    
+    .has-submenu>a:after {
+    display: none;
+    /* display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    line-height: 0;
+    vertical-align: middle;
+    font-family: "Font Awesome 5 Free";
+    font-size: 1rem;
+    color: inherit;
+    content: ""; */
+}
     .mobile-menu ul {
         display: none;
         list-style-type: none;
@@ -41,17 +53,18 @@
 
     /* Arrow styles */
     .submenu-arrow {
-        display: inline-block;
-        width: 0;
-        height: 0;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 5px solid #000; /* Arrow color */
-        margin-left: 5px;
-        vertical-align: middle;
-        transition: transform 0.3s ease;
-    }
-
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff; /* Changed arrow color to white */
+    position: absolute; /* Position it absolutely within the parent */
+    right: 10px; /* Align it to the right side */
+    top: 50%; /* Vertically center it */
+    transform: translateY(-50%); /* Vertically center it */
+    transition: transform 0.3s ease;
+}
     /* Rotate arrow when submenu is open */
     .has-submenu.open > a .submenu-arrow {
         transform: rotate(180deg);
@@ -60,9 +73,10 @@
     /* Basic styling for menu items */
     .mobile-menu a {
         text-decoration: none;
-        color: #333;
+        color: #ffffff;
         padding: 10px;
         display: block;
+        position: relative;
     }
 
     .mobile-menu li {
