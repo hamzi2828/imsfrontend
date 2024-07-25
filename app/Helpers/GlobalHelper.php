@@ -10,6 +10,9 @@
     // function serverPath ( $param ): string {
     //     return 'https://www.ims.bookmytrip.pk/' . $param;
     // }
+    // function serverPath ( $param ): string {
+    //     return 'https://backlink2.broadmax.shop/' . $param;
+    // }
 
     function siteSettings () {
         return ( new SiteSettingService() ) -> get_settings_by_slug ( 'site-settings' );

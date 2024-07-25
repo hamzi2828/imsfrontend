@@ -63,3 +63,6 @@
     Route ::get ( '/invoice/{sale:sale_id}', function ( \App\Models\Sale $sale ) {
         return ( new \App\Notifications\OrderCreatedNotification( $sale ) ) -> toMail ( \App\Models\User ::first () );
     } );
+
+
+    Route::get('/phone-number', [HomeController::class, 'getPhoneNumber']);

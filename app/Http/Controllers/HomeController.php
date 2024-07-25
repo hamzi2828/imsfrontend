@@ -100,4 +100,14 @@
             return view ( 'index', $data );
         }
         
+        public function getPhoneNumber()
+        {
+            
+            $siteSettings = SiteSettings::first();
+            $phoneNumber = optional($siteSettings->settings)->phone;
+    // dd($phoneNumber);
+            return response()->json([
+                'phone_number' => $phoneNumber,
+            ]);
+        }
     }
