@@ -159,10 +159,13 @@
                         $html .= '<li>';
                         $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
                         $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
+                        
                         if (count($category->subcategories) > 0) {
-                            $html .= ' <span class="submenu-arrow"><i class="w-icon-angle-right"></i></span>'; // Arrow icon
+                            $html .= '<i class="w-icon-angle-right ms-auto"></i>'; 
                         }
+                        
                         $html .= '</a>';
+                        
 
                         if (count($category->subcategories) > 0) {
                             $html .= $this->subMenu($category);
