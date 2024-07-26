@@ -81,7 +81,7 @@
         $count = 0; // Initialize counter
     @endphp
     @foreach($category_products as $category)
-        @if($count >= 11)
+        @if($count >= 19)
             @break // Stop after 12 iterations
         @endif
         @if($category->parent_id === null && $category->status === 'active' && !$category->trashed()) 
