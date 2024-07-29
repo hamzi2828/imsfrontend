@@ -14,16 +14,25 @@
             <p>Account</p>
         </a>
     @endif
-    <div class="cart-dropdown dir-up">
-        <a href="{{ route ('cart.index') }}" class="sticky-link">
+    {{-- <div class="cart-dropdown dir-up">
+        <a href="#" class="cart-toggle label-down link sticky-link">
             <i class="w-icon-cart"></i>
             <p>Cart</p>
-
-
         </a>
+        @include('partials._cartslider')
+
+    </div> --}}
+
+
+    <div class="dropdown cart-dropdown cart-offcanvas mr-0 mr-lg-2">
+        <div class="cart-overlay"></div>  
+        <a href="#" class="cart-toggle label-down link sticky-link">   
+                <i class="w-icon-cart"></i>
+                    <p>Cart</p>
+                </a>
+                
         <!-- End of Dropdown Box -->
     </div>
-
     <div class="cart-dropdown dir-up">
         <a href="tel:" class="sticky-link sticky-link-call ">
             <i class="w-icon-call"></i>

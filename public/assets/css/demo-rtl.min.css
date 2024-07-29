@@ -14602,7 +14602,7 @@ aside .sp-sidebar-banner span {
   overflow: visible;
 }
 .cart-dropdown .products {
-  max-height: 28rem;
+  /* max-height: 28rem; */
   border-bottom: 1px solid #eee;
   padding-bottom: 2.1rem;
 }

@@ -30,6 +30,9 @@
     Route ::get ( '/cart/clear', [ CartController::class, 'clear' ] ) -> name ( 'cart.clear' );
     Route ::post ( '/cart/apply-discount', [ CartController::class, 'apply_discount' ] ) -> name ( 'cart.apply-discount' );
     Route ::resource ( 'cart', CartController::class );
+
+
+
     
     Route ::resource ( 'checkout', CheckoutController::class );
     Route ::resource ( 'wishlist', WishlistController::class );
@@ -66,3 +69,6 @@
 
 
     Route::get('/phone-number', [HomeController::class, 'getPhoneNumber']);
+  
+Route::get('/cart-slider', [CartController::class, 'cartslider'])->name('cart.slider');
+

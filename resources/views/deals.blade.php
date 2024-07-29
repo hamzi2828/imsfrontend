@@ -90,8 +90,8 @@
                                             @include('product-ratings', ['product' => $deal])
                                             @include('add-to-cart', ['product' => $deal])
                                             <div class="social-links-wrapper mt-1">
-{{--                                                @include('product-share-icons', ['product' => $deal])--}}
-{{--                                                 <span class="divider d-xs-show"></span> --}}
+                                                 {{--      @include('product-share-icons', ['product' => $deal])--}}
+                                                {{--     <span class="divider d-xs-show"></span> --}}
                                                 <div class="product-link-wrapper d-flex">
                                                     <a href="javascript:void(0)" id="wishlist-{{ $deal -> id }}"
                                                        onclick="addToWishList('{{ route ('products.add-to-wishlist', ['product' => $deal -> slug]) }}')"

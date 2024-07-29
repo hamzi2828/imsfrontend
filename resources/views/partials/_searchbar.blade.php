@@ -1,3 +1,5 @@
+
+
 <div class="header-middle">
     <div class="container">
         <div class="header-left mr-md-4">
@@ -27,17 +29,21 @@
             </a>
             <div class="dropdown cart-dropdown cart-offcanvas mr-0 mr-lg-2">
                 <div class="cart-overlay"></div>
-                <a href="{{ route ('cart.index') }}" class="label-down link">
-                    <i class="w-icon-cart">
-                        <span class="cart-count" style="top: 0">
-                            {{ \Gloudemans\Shoppingcart\Facades\Cart::content () -> count () }}
-                        </span>
-                    </i>
-                    <span class="cart-label">Cart</span>
-                </a>
+    
+                        <a href="#" class="cart-toggle label-down link">
+                            <i class="w-icon-cart">
+                                <span class="cart-count" style="top: 0">
+                                    {{ \Gloudemans\Shoppingcart\Facades\Cart::content () -> count () }}
+                                </span>
+                            </i>
+                            <span class="cart-label">Cart</span>
+                        </a>
+                            @include('partials._cartslider')
+      
+
                 <!-- End of Dropdown Box -->
             </div>
         </div>
     </div>
 </div>
-<!-- End of Header Middle -->
+
