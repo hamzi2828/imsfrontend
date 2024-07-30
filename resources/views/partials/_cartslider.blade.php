@@ -92,7 +92,7 @@
                                     '<a href="' + item.options.path + '" class="product-name">' + item.name + '</a>' +
                                     '<div class="price-box">' +
                                     '<span class="product-quantity">' + item.qty + '</span>' +
-                                    '<span class="product-price">'   + item.price + ' '+ currency + '</span>' +
+                                    '<span class="product-price">' + currency + ' ' + item.price +  '</span>' +
                                     '</div>' +
                                     '</div>' +
                                     '<figure class="product-media">' +
