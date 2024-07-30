@@ -1,5 +1,10 @@
+
+
+
+
 <div class="sticky-sidebar">
     <div class="cart-summary mb-4">
+
         <h3 class="cart-title text-uppercase">Cart Totals</h3>
         <div class="cart-subtotal d-flex align-items-center justify-content-between">
             <label class="ls-25">Subtotal</label>

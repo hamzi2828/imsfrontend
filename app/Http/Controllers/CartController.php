@@ -97,6 +97,7 @@
                 $coupon      = Coupon ::where ( [ 'code' => $coupon_code ] )
                     -> where ( 'start_date', '<=', $date )
                     -> where ( 'end_date', '>=', $date )
+                    ->where('status', 'active')
                     -> first ();
                 
                 if ( $coupon ) {

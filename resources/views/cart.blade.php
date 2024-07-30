@@ -97,18 +97,54 @@
                             </div>
                         </form>
                         
-                        <form class="coupon" method="post" action="{{ route ('cart.apply-discount') }}">
+                        {{-- <form class="coupon" method="post" action="{{ route ('cart.apply-discount') }}">
                             @csrf
                             <h5 class="title coupon-title font-weight-bold text-uppercase">Coupon Discount</h5>
                             <input type="text" class="form-control mb-4" placeholder="Enter coupon code here..."
                                    required="required" name="coupon-code"
                                    value="{{ old ('coupon-code', session () -> get ('coupon-code')) }}" />
                             <button class="btn btn-dark btn-outline btn-rounded" type="submit">Apply Coupon</button>
-                        </form>
+                        </form> --}}
                     </div>
-                    <div class="col-lg-4 sticky-sidebar-wrapper">
-                        @include('cart-totals')
+
+                    <div class="col-lg-4 ">
+                        <style>
+                            .coupon-container {
+                                border: 2px dotted #ddd; /* Adjust color and width as needed */
+                                padding: 15px; /* Optional: Add padding inside the border */
+                                border-radius: 5px; /* Optional: Add rounded corners */
+                            }
+                        
+                            .coupon-container .form-control {
+                                border: 1px solid #ddd; /* Optional: Style the input border */
+                            }
+                        
+                            .coupon-container .btn-checkout {
+                                margin-top: 10px; /* Adjust margin as needed */
+                            }
+                        </style>
+                        <div class="coupon-container mb-6">
+                            <h3 class="cart-title text-uppercase">Coupon Discount</h3>
+                            <div class="cart-subtotal d-flex align-items-center w-100 justify-content-between">
+                                <form class="coupon w-100" method="post" action="{{ route('cart.apply-discount') }}">
+                                    @csrf
+                                    <input type="text" class="form-control mb-4" placeholder="Enter coupon code here..."
+                                        required="required" name="coupon-code"
+                                        value="{{ old('coupon-code', session()->get('coupon-code')) }}" />
+                                    <button class="btn btn-block btn-dark btn-icon-right btn-rounded btn-checkout" type="submit">Apply Coupon</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                  
+                        
+
+                        <div class="sticky-sidebar-wrapper">
+                            @include('cart-totals')
+
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
