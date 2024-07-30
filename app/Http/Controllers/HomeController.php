@@ -91,6 +91,9 @@
                     return $products -> available_quantity () > 0;
                 } ) -> take ( 10 );
             }
+
+            $data['currency'] = optional(siteSettings()->settings)->currency;
+
             
             $data[ 'banners' ]        = HomeSetting ::first ();
             $ip                       = request () -> ip ();
@@ -100,4 +103,14 @@
             return view ( 'index', $data );
         }
         
+        public function getPhoneNumber()
+        {
+            
+            $siteSettings = SiteSettings::first();
+            $phoneNumber = optional($siteSettings->settings)->phone;
+    
+            return response()->json([
+                'phone_number' => $phoneNumber,
+            ]);
+        }
     }

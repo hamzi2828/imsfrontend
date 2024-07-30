@@ -89,7 +89,7 @@
                                             @endforeach
                                         @endif
                                     </ul> --}}
-                                    <ul class="widget-body filter-items search-ul">
+                                    {{-- <ul class="widget-body filter-items search-ul">
                                         @php $existingParams = request()->query(); @endphp
                                         @if (count($categories) > 0)
                                             @foreach ($categories as $category)
@@ -128,7 +128,55 @@
                                             @endforeach
                                         @endif
                                     </ul>
+                                     --}}
                                     
+
+
+
+
+                                     <ul class="widget-body filter-items search-ul">
+                                        @php $existingParams = request()->query(); @endphp
+                                        @if (count($categories) > 0)
+                                            @foreach ($categories as $category)
+                                                @if ($category->parent_id == null && $category->status !== 'inactive')
+                                                    @php $queryParams = array_merge($existingParams, ['category' => $category->slug]); @endphp
+                                                    <li style="{{ request('category') == $category->slug ? 'font-weight: 700' : '' }}">
+                                                        <a href="{{ route('products.index', $queryParams) }}">
+                                                            {{ $category->title }}
+                                                        </a>
+                                                        @if ($category->subcategories->count() > 0)
+                                                            <ul>
+                                                                @foreach ($category->subcategories as $subCategory)
+                                                                    @if ($subCategory->status !== 'inactive')
+                                                                        @php $subQueryParams = array_merge($existingParams, ['category' => $subCategory->slug]); @endphp
+                                                                        <li style="{{ request('category') == $subCategory->slug ? 'font-weight: 700' : '' }}">
+                                                                            <a href="{{ route('products.index', $subQueryParams) }}">
+                                                                                {{ $subCategory->title }}
+                                                                            </a>
+                                                                            @if ($subCategory->subcategories->count() > 0)
+                                                                                <ul class="child-ul">
+                                                                                    @foreach ($subCategory->subcategories as $childCategory)
+                                                                                        @if ($childCategory->status !== 'inactive')
+                                                                                            @php $childQueryParams = array_merge($existingParams, ['category' => $childCategory->slug]); @endphp
+                                                                                            <li style="{{ request('category') == $childCategory->slug ? 'font-weight: 700' : '' }}">
+                                                                                                <a href="{{ route('products.index', $childQueryParams) }}">
+                                                                                                    {{ $childCategory->title }}
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </ul>
+                                                                            @endif
+                                                                        </li>
+                                                                    @endif
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </ul>
                                     
                                 </div>
                                 <!-- End of Collapsible Widget -->

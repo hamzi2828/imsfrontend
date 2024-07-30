@@ -11,6 +11,8 @@
     use Illuminate\Http\RedirectResponse;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Session;
+
+
     
     class CartController extends Controller {
         
@@ -111,5 +113,28 @@
             catch ( \Exception $exception ) {
                 return redirect () -> back () -> with ( 'error', $exception -> getMessage () );
             }
+        }
+
+     
+        public function cartslider()
+        {
+           
+                // Check if the cart is empty
+            if (Cart::content()->count() != 0) {
+                // Prepare the data for response
+                $data = [
+                    'status' => 'success',
+                    'title' => 'Cart',
+                    'products' => Cart::content(),
+                    'site_settings' => siteSettings()
+                ];
+                return response()->json($data);
+            } else {
+                // Redirect back if the cart is empty
+                return redirect()->back();
+            }
+        
+            // Return a JSON response with the data
+           
         }
     }

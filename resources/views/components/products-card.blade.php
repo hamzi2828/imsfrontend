@@ -17,6 +17,11 @@
                         <a href="javascript:void(0)" class="btn-product-icon w-icon-search"
                         onclick="initProductQuickView('{{ route ('products.quick-view', ['product' => $product -> slug]) }}')"
                         title="Quick View"></a>
+
+                        <a href="{{ route('products.show', ['product' => $product->slug]) }}" class="btn-product-icon">
+                            <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
+                        </a>
+                        
                     @else
                         <a href="javascript:void(0)" class="btn-product-icon w-icon-cart"
                         onclick="addToCart(this, '{{ route ('cart.store', ['product' => $product -> slug]) }}', {{ $product -> available_quantity() }})"
@@ -31,6 +36,7 @@
                         onclick="initProductQuickView('{{ route ('products.quick-view', ['product' => $product -> slug]) }}')"
                         title="Quick View"></a>
                     @endif
+                    
             </div>
         </figure>
         <div class="product-details">

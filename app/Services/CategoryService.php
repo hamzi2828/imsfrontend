@@ -87,59 +87,136 @@
 
 
 
-            public function generateMenu($categories): string {
-                $html = '<li class="has-submenu">';
-                if (count($categories) > 0) {
+            // public function generateMenu($categories): string {
+                
+            //     $html = '<li class="has-submenu">';
+            //     if (count($categories) > 0) {
+            //         foreach ($categories as $category) {
+            //             if ($category->trashed() || $category->status === 'inactive') {
+            //                 continue; // Skip soft-deleted categories
+            //             }
+            //             $html .= '<li>';
+            //             $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
+            //             $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
+            //             $html .= '</a>';
+
+            //             if (count($category->subcategories) > 0) {
+            //                 $html .= $this->subMenu($category);
+            //             }
+
+            //             $html .= '</li>';
+            //         }
+            //     }
+            //     return $html;
+            // }
+
+
+            // public function subMenu($category, $class = 'megamenu'): string {
+                
+            //     $html = '<ul class="' . $class . '">';
+            //     if (count($category->subcategories) > 0) {
+            //         foreach ($category->subcategories as $subCategory) {
+            //             if ($subCategory->trashed() || $category->status === 'inactive') {
+            //                 continue; // Skip soft-deleted subcategories
+            //             }
+            //             $html .= '<li>';
+
+            //             $html .= '<a href="' . route('products.index', ['category' => $subCategory->slug]) . '">';
+            //             if (!empty(trim($subCategory->icon))) {
+            //                 $html .= '<i class="' . $subCategory->icon . '"></i>';
+            //             }
+            //             $html .= $subCategory->title;
+            //             $html .= '</a>';
+
+            //             if (count($subCategory->subcategories) > 0) {
+            //                 $html .= '<hr class="divider">';
+            //                 $html .= $this->subMenu($subCategory, '');
+            //             }
+
+            //             $html .= '</li>';
+            //         }
+            //     }
+            //     $html .= '</ul>';
+
+            //     return $html;
+            // }
+
+                    
+                public function generateMenu($categories): string {
+                    $html = '<li class="has-submenu">';
+                    $count = 0;
+
+                    if (count($categories) > 0) {
                     foreach ($categories as $category) {
-                        if ($category->trashed()) {
+                        if ($category->trashed() || $category->status === 'inactive') {
                             continue; // Skip soft-deleted categories
                         }
+
+                        if ($count >= 11) {
+                            break; // Stop after 12 iterations
+                        }
+
                         $html .= '<li>';
                         $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
                         $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
+                        
+                        if (count($category->subcategories) > 0) {
+                            $html .= '<i class="w-icon-angle-right ms-auto"></i>'; 
+                        }
+                        
                         $html .= '</a>';
+                        
 
                         if (count($category->subcategories) > 0) {
                             $html .= $this->subMenu($category);
                         }
 
                         $html .= '</li>';
+
+                        $count++;
                     }
-                }
-                return $html;
-            }
-
-
-            public function subMenu($category, $class = 'megamenu'): string {
-                $html = '<ul class="' . $class . '">';
-                if (count($category->subcategories) > 0) {
-                    foreach ($category->subcategories as $subCategory) {
-                        if ($subCategory->trashed()) {
-                            continue; // Skip soft-deleted subcategories
-                        }
-                        $html .= '<li>';
-
-                        $html .= '<a href="' . route('products.index', ['category' => $subCategory->slug]) . '">';
-                        if (!empty(trim($subCategory->icon))) {
-                            $html .= '<i class="' . $subCategory->icon . '"></i>';
-                        }
-                        $html .= $subCategory->title;
-                        $html .= '</a>';
-
-                        if (count($subCategory->subcategories) > 0) {
-                            $html .= '<hr class="divider">';
-                            $html .= $this->subMenu($subCategory, '');
-                        }
-
-                        $html .= '</li>';
                     }
+
+                    return $html;
                 }
-                $html .= '</ul>';
-
-                return $html;
-            }
 
 
+                public function subMenu($category, $class = 'megamenu'): string {
+                    // Skip inactive categories at the top level
+                    if ($category->status === 'inactive') {
+                        return ''; // Return an empty string if the category is inactive
+                    }
+                
+                    $html = '<ul class="' . $class . '">';
+                    if (count($category->subcategories) > 0) {
+                        foreach ($category->subcategories as $subCategory) {
+                            // Skip soft-deleted or inactive subcategories
+                            if ($subCategory->trashed() || $subCategory->status === 'inactive') {
+                                continue;
+                            }
+                            $html .= '<li>';
+                
+                            $html .= '<a href="' . route('products.index', ['category' => $subCategory->slug]) . '">';
+                            if (!empty(trim($subCategory->icon))) {
+                                $html .= '<i class="' . $subCategory->icon . '"></i>';
+                            }
+                            $html .= $subCategory->title;
+                            $html .= '</a>';
+                
+                            if (count($subCategory->subcategories) > 0) {
+                                $html .= '<hr class="divider">';
+                                $html .= $this->subMenu($subCategory, '');
+                            }
+                
+                            $html .= '</li>';
+                        }
+                    }
+                    $html .= '</ul>';
+                
+                    return $html;
+                }
+            
+            
 
         public function getAllChildCategories ( $categoryId ): array {
             $childCategories      = $this -> getChildCategories ( $categoryId );
@@ -162,4 +239,76 @@
                 }
             }
         }
+        public function generateMobileMenu($categories): string {
+            $html = '<ul class="mobile-menu">'; // Start with an unordered list
+            
+            $count = 0;
+        
+            foreach ($categories as $category) {
+                if ($category->trashed() || $category->status === 'inactive') {
+                    continue; // Skip soft-deleted or inactive categories
+                }
+        
+                if ($count >= 12) {
+                    break; // Limit to 12 top-level categories
+                }
+        
+                $hasSubcategories = $category->subcategories->count() > 0;
+                $html .= '<li class="' . ($hasSubcategories ? 'has-submenu' : '') . '">';
+                $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
+                $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
+                if ($hasSubcategories) {
+                    $html .= '<span class="submenu-arrow"></span>'; // Add arrow for categories with subcategories
+                }
+                $html .= '</a>';
+        
+                if ($hasSubcategories) {
+                    $html .= $this->subMobileMenu($category->subcategories); // Render subcategories
+                }
+        
+                $html .= '</li>';
+        
+                $count++;
+            }
+        
+            $html .= '</ul>'; // Close the unordered list
+            return $html;
+        }
+        
+        // Method to generate submenus recursively for mobile menu
+        private function subMobileMenu($subcategories): string {
+            $html = '<ul>'; // Start with an unordered list for subcategories
+        
+            foreach ($subcategories as $subcategory) {
+                if ($subcategory->trashed() || $subcategory->status === 'inactive') {
+                    continue; // Skip soft-deleted or inactive subcategories
+                }
+        
+                $hasSubcategories = $subcategory->subcategories->count() > 0;
+                $html .= '<li class="' . ($hasSubcategories ? 'has-submenu' : '') . '">';
+                $html .= '<a href="' . route('products.index', ['category' => $subcategory->slug]) . '">';
+                $html .= $subcategory->title;
+                if ($hasSubcategories) {
+                    $html .= '<span class="submenu-arrow"></span>'; // Add arrow for subcategories with children
+                }
+                $html .= '</a>';
+        
+                if ($hasSubcategories) {
+                    $html .= $this->subMobileMenu($subcategory->subcategories); // Render nested subcategories
+                }
+        
+                $html .= '</li>';
+            }
+        
+            $html .= '</ul>'; // Close the unordered list
+            return $html;
+        }
+        
+        
+
+
     }
+
+
+
+    

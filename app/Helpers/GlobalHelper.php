@@ -3,13 +3,16 @@
     use App\Services\SiteSettingService;
     use Illuminate\Support\Facades\Cache;
     
-    // function serverPath ( $param ): string {
-    //     return 'https://backoffice.milimart.pk/' . $param;
-    // }
-    
     function serverPath ( $param ): string {
-        return 'https://www.ims.bookmytrip.pk/' . $param;
+        return 'https://backoffice.milimart.pk/' . $param;
     }
+    
+    // function serverPath ( $param ): string {
+    //     return 'https://www.ims.bookmytrip.pk/' . $param;
+    // }
+    // function serverPath ( $param ): string {
+    //     return 'https://backlink2.broadmax.shop/' . $param;
+    // }
 
     function siteSettings () {
         return ( new SiteSettingService() ) -> get_settings_by_slug ( 'site-settings' );
