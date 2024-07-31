@@ -105,6 +105,7 @@
                 if ( $coupon ) {
                     Cart ::setGlobalDiscount ( $coupon -> discount );
                     Session ::put ( 'coupon-code', $coupon_code );
+                    Session::put('coupon-id', $coupon->id);
                     return redirect () -> back ();
                 }
                 else

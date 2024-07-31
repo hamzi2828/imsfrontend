@@ -10,4 +10,10 @@
         use HasFactory;
         
         protected $guarded = [];
+
+        public function sales(): HasMany {
+            return $this->hasMany(Sale::class);
+        }
+
+        
     }

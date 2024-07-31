@@ -18,6 +18,7 @@
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\DB;
     use Illuminate\Support\Facades\Log;
+    use App\Models\Coupon;
     
     class CheckoutController extends Controller {
         
@@ -42,6 +43,7 @@
         
         public function store ( CheckoutFormRequest $request ): RedirectResponse {
             try {
+
                 DB ::beginTransaction ();
                 $customer = Customer ::where ( [ 'email' => $request -> input ( 'email' ) ] ) -> first ();
                 $user     = User ::where ( [ 'email' => $request -> input ( 'email' ) ] ) -> first ();
@@ -54,14 +56,31 @@
                     Auth ::login ( $user, true );
                 }
                 
+                
                 $sale = $this -> saleService -> sale ( $request, $customer );
+                
                 $this -> saleService -> sale_products ( $request, $sale );
+                
                 $user -> notify ( new OrderCreatedNotification( $sale ) );
                 DB ::commit ();
-                
                 if ( $customer -> id > 0 ) {
-                    Cart ::destroy ();
-                    session () -> remove ( 'coupon-code' );
+                    $couponCode = session()->get('coupon-code');
+                    $couponId = session()->get('coupon-id');
+
+                    if ($couponCode && $couponId) {
+                        $coupon = Coupon::where('id', $couponId)->where('code', $couponCode)->first();
+                        if ($coupon) {
+                            $coupon->increment('used_frequency');
+                            if ($coupon->used_frequency >= $coupon->use_frequency) {
+                                $coupon->update(['status' => 'inactive']);
+                            }
+                        }
+                    }
+                    Cart::destroy();
+                    session()->remove('coupon-code');
+                    session()->remove('coupon-id');
+                    // Cart ::destroy ();
+                    // session () -> remove ( 'coupon-code' );
                     return redirect ( route ( 'sales.index', [ 'sale' => $sale -> sale_id ] ) )
                         -> with ( 'message', 'Your purchase has been successfully completed, and a confirmation email has been sent to you for your records.' );
                 }
