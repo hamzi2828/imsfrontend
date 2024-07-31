@@ -11,7 +11,9 @@
         </style>
     @endpush
     @include('partials._topbar')
-    
+    @php
+    $currency = optional(siteSettings()->settings)->currency;
+@endphp
     <main class="main cart mt-5">
         <!-- Start of PageContent -->
         <div class="page-content">
@@ -33,7 +35,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(count ($products) > 0)
+                                                                
+                                    @if(count ($products) > 0)
                                     @foreach($products as $product)
                                         <tr>
                                             <td class="product-thumbnail">
@@ -41,11 +44,11 @@
                                                     <a href="{{ $product -> options ?-> route }}">
                                                         <figure>
                                                             <img src="{{ $product -> options ?-> image  }}"
-                                                                 alt="product" height="100" style="height: 100px">
+                                                                alt="product" height="100" style="height: 100px">
                                                         </figure>
                                                     </a>
                                                     <a href="{{ route ('cart.remove', ['cart' => $product -> rowId]) }}"
-                                                       onclick="return confirm('Are you sure?')" class="btn btn-close">
+                                                    onclick="return confirm('Are you sure?')" class="btn btn-close">
                                                         <i class="fas fa-times"></i>
                                                     </a>
                                                 </div>
@@ -54,32 +57,33 @@
                                                 <a href="{{ $product -> options ?-> route }}">
                                                     {{ $product -> name }}
                                                     <a href="{{ route ('cart.remove', ['cart' => $product -> rowId]) }}"
-                                                       onclick="return confirm('Are you sure?')">
+                                                    onclick="return confirm('Are you sure?')">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 </a>
                                             </td>
                                             <td class="product-price" align="center">
-                                            <span class="amount">
-                                                {{ number_format ($product -> options ?-> actualPrice, 2) }}
-                                                @if($product -> options ?-> discount > 0)
-                                                    ({{ $product -> options ?-> discount }}% OFF)
-                                                @endif
-                                            </span>
+                                                <span class="amount">
+                                                    {{ $currency }} {{ number_format ($product -> options ?-> actualPrice, 2) }}
+                                                    @if($product -> options ?-> discount > 0)
+                                                        ({{ $product -> options ?-> discount }}% OFF)
+                                                    @endif
+                                                </span>
                                             </td>
                                             <td>
                                                 <input class="form-control" type="number" min="1"
-                                                       max="100000" name="quantity[{{ $product -> rowId }}]"
-                                                       value="{{ $product -> qty }}">
+                                                    max="100000" name="quantity[{{ $product -> rowId }}]"
+                                                    value="{{ $product -> qty }}">
                                             </td>
                                             <td class="product-subtotal" align="center">
                                                 <span class="amount">
-                                                    {{ number_format (($product -> options ?-> net * $product -> qty), 2) }}
+                                                    {{ $currency }} {{ number_format (($product -> options ?-> net * $product -> qty), 2) }}
                                                 </span>
                                             </td>
                                         </tr>
                                     @endforeach
-                                @endif
+                                    @endif
+
                                 </tbody>
                             </table>
                             
@@ -124,7 +128,8 @@
                             }
                         </style>
                         <div class="coupon-container mb-6">
-                            <h3 class="cart-title text-uppercase">Coupon Discount</h3>
+                            <h4 class="cart-title text-uppercase">Coupon Discount</h4>
+                            
                             <div class="cart-subtotal d-flex align-items-center w-100 justify-content-between">
                                 <form class="coupon w-100" method="post" action="{{ route('cart.apply-discount') }}">
                                     @csrf

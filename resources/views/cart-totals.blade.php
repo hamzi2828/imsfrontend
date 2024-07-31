@@ -1,6 +1,8 @@
 
 
-
+@php
+    $currency = optional(siteSettings()->settings)->currency;
+@endphp
 
 <div class="sticky-sidebar">
     <div class="cart-summary mb-4">
@@ -8,7 +10,7 @@
         <h3 class="cart-title text-uppercase">Cart Totals</h3>
         <div class="cart-subtotal d-flex align-items-center justify-content-between">
             <label class="ls-25">Subtotal</label>
-            <span>{{ \Gloudemans\Shoppingcart\Facades\Cart::initial () }}</span>
+            <span> {{ $currency }} {{ \Gloudemans\Shoppingcart\Facades\Cart::initial () }}</span>
         </div>
         
         @if(Gloudemans\Shoppingcart\Facades\Cart::discount() > 0)
@@ -22,7 +24,7 @@
                         <input type="radio" checked="checked" id="flat-rate"
                                class="custom-control-input" disabled="disabled">
                         <label for="flat-rate" class="custom-control-label color-dark">
-                            {{ Gloudemans\Shoppingcart\Facades\Cart::discount() }}
+                            {{ $currency }}  {{ Gloudemans\Shoppingcart\Facades\Cart::discount() }}
                             ({{ session () -> get ('coupon-code') }})
                         </label>
                     </div>
@@ -40,7 +42,7 @@
                     <input type="radio" checked="checked" id="flat-rate"
                            class="custom-control-input" disabled="disabled">
                     <label for="flat-rate" class="custom-control-label color-dark">
-                        {{ optional ($site_settings -> settings) -> shipping_charges > 0 ? number_format (optional ($site_settings -> settings) -> shipping_charges, 2) : 'FREE' }}
+                        {{ optional ($site_settings -> settings) -> shipping_charges > 0 ? $currency .' '. number_format (optional ($site_settings -> settings) -> shipping_charges, 2) : 'FREE' }}
                     </label>
                 </div>
             </li>
@@ -60,7 +62,7 @@
               
                     $newSubtotalFormatted = number_format($newSubtotal, 2); // Format the result
                 @endphp
-                {{ $newSubtotalFormatted }}
+              {{ $currency }} {{ $newSubtotalFormatted }}
             </span>
         </div>
         <a href="{{ route ('checkout.index') }}"
