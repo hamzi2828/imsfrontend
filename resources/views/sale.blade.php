@@ -109,7 +109,7 @@
                         <tr class="total">
                             <th></th>
                             <th class="border-no" align="left">Total:</th>
-                            <td class="border-no" align="right">{{ $currency }}{{ number_format ($sale -> net, 2) }}</td>
+                            <td class="border-no" align="right">{{ $currency }} {{ number_format ($sale -> net, 2) }}</td>
                         </tr>
                         </tfoot>
                     </table>

@@ -233,6 +233,10 @@
     
     </style>
 </head>
+@php
+    $currency = optional(siteSettings()->settings)->currency;
+@endphp
+
 <body style="padding: 0; margin: 0; -webkit-font-smoothing:antialiased; background-color:#f1f1f1; -webkit-text-size-adjust:none;">
 <!--Main Parent Table -->
 <table width="100%" border="0" cellpadding="0" direction="ltr" bgcolor="#f1f1f1" cellspacing="0" role="presentation"
@@ -357,7 +361,7 @@
                                 {{ $product -> product -> title() }} ({{ $product -> quantity }})
                             </td>
                             <td width="20%">
-                                {{ number_format ($product -> net_price, 2) }}
+                                {{ $currency }} {{ number_format ($product -> net_price, 2) }}
                             </td>
                         </tr>
                     @endforeach
@@ -369,7 +373,7 @@
                         TOTAL
                     </td>
                     <td>
-                        {{ number_format ($sale -> total, 2) }}
+                       {{ $currency }} {{ number_format ($sale -> total, 2) }}
                     </td>
                 </tr>
                 @if($sale -> coupon)
@@ -388,7 +392,7 @@
                         SHIPPING
                     </td>
                     <td>
-                        {{ number_format ($sale -> shipping, 2) }}
+                       {{  $currency }}  {{ number_format ($sale -> shipping, 2) }}
                     </td>
                 </tr>
                 <tr>
@@ -396,7 +400,7 @@
                         NET
                     </td>
                     <td>
-                        {{ number_format ($sale -> net, 2) }}
+                    {{ $currency }} {{ number_format ($sale -> net, 2) }}
                     </td>
                 </tr>
                 </tfoot>
