@@ -16,10 +16,14 @@
     class ProductUserReviewController extends Controller {
         
         public function store ( ProductUserReviewFormRequest $request, Product $product ) {
+          
             try {
                 DB ::beginTransaction ();
-                ( new ProductUserReviewService() ) -> save ( $request, $product );
+               $data =  ( new ProductUserReviewService() ) -> save ( $request, $product );
+                // dd($data );
+                if (auth()->check()) {
                 Notification ::route ( 'mail', siteSettings () -> settings -> email ) -> notify ( new ReviewPostedNotification( $product ) );
+                }
                 DB ::commit ();
                 
                 return redirect () -> back () -> with ( 'status', 'Your review has been sent for review.' );

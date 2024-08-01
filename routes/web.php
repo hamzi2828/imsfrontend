@@ -60,8 +60,10 @@
     
     Route ::middleware ( [ 'auth' ] ) -> group ( function () {
         Route ::resource ( 'users', UserController::class );
-        Route ::post ( 'product/{product:slug}/reviews/store', [ ProductUserReviewController::class, 'store' ] ) -> name ( 'reviews.store' );
+        // Route ::post ( 'product/{product:slug}/reviews/store', [ ProductUserReviewController::class, 'store' ] ) -> name ( 'reviews.store' );
     } );
+    
+    Route ::post ( 'product/{product:slug}/reviews/store', [ ProductUserReviewController::class, 'store' ] ) -> name ( 'reviews.store' );
     
     Route ::get ( '/invoice/{sale:sale_id}', function ( \App\Models\Sale $sale ) {
         return ( new \App\Notifications\OrderCreatedNotification( $sale ) ) -> toMail ( \App\Models\User ::first () );
