@@ -4,6 +4,10 @@
     @endpush
     @include('partials._topbar')
     
+    @php
+       $currency = optional(siteSettings()->settings)->currency;
+    @endphp
+
     <main class="main cart mt-5">
         <div class="page-content">
             <div class="container">
@@ -84,7 +88,7 @@
                                                         </span>
                                                     </td>
                                                     <td class="product-total">
-                                                        {{ number_format (($product -> options ?-> net * $product -> qty), 2) }}
+                                                      {{ $currency }}  {{ number_format (($product -> options ?-> net * $product -> qty), 2) }}
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -94,7 +98,7 @@
                                                 <b>Subtotal</b>
                                             </td>
                                             <td>
-                                                <b>{{ \Gloudemans\Shoppingcart\Facades\Cart::initial () }}</b>
+                                                <b>{{ $currency }} {{ \Gloudemans\Shoppingcart\Facades\Cart::initial () }}</b>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -156,7 +160,7 @@
                                                   
                                                         $newSubtotalFormatted = number_format($newSubtotal, 2); // Format the result
                                                     @endphp
-                                                    {{ $newSubtotalFormatted }}
+                                                    {{ $currency }} {{ $newSubtotalFormatted }}
                                                 </b>
                                             </td>
                                         </tr>

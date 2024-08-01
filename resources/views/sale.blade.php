@@ -4,12 +4,16 @@
     @endpush
     @include('partials._topbar')
     
+    @php
+    $currency = optional(siteSettings()->settings)->currency;
+    @endphp
+
     <main class="main cart mt-5">
         <div class="page-content">
             <div class="container">
                 <div class="order-success text-center font-weight-bolder text-dark">
                     <i class="fas fa-check"></i>
-                    Thank you. Your order has been received.
+                    Thank you. Your order has been received. 
                 </div>
                 <!-- End of Order Success -->
                 
@@ -17,7 +21,7 @@
                     <li>
                         <label>Order number</label>
                         <strong>{{ $sale -> sale_id }}</strong>
-                    </li>
+                    </li> 
                     <li>
                         <label>Status</label>
                         <strong>
@@ -37,7 +41,7 @@
                     </li>
                     <li>
                         <label>Total</label>
-                        <strong>{{ number_format ($sale -> net, 2) }}</strong>
+                        <strong>{{  $currency }} {{ number_format ($sale -> net, 2) }}</strong>
                     </li>
                     <li>
                         <label>Payment method</label>
@@ -71,7 +75,7 @@
                                         </a>
                                         <strong>x {{ $product -> quantity }}</strong><br>
                                     </td>
-                                    <td align="right">{{ number_format ($product -> net_price, 2) }}</td>
+                                    <td align="right">{{ $currency }} {{ number_format ($product -> net_price, 2) }}</td>
                                 </tr>
                             @endforeach
                         @endif
@@ -80,7 +84,7 @@
                         <tr>
                             <th></th>
                             <th align="left">Subtotal:</th>
-                            <td align="right">{{ number_format ($sale -> total, 2) }}</td>
+                            <td align="right">{{ $currency }} {{ number_format ($sale -> total, 2) }}</td>
                         </tr>
                         @if($sale -> coupon_id > 0)
                             <tr>
@@ -95,7 +99,7 @@
                         <tr>
                             <th></th>
                             <th align="left">Shipping:</th>
-                            <td align="right">{{ number_format ($sale -> shipping, 2) }}</td>
+                            <td align="right">{{ $currency }} {{ number_format ($sale -> shipping, 2) }}</td>
                         </tr>
                         <tr>
                             <th></th>
@@ -105,7 +109,7 @@
                         <tr class="total">
                             <th></th>
                             <th class="border-no" align="left">Total:</th>
-                            <td class="border-no" align="right">{{ number_format ($sale -> net, 2) }}</td>
+                            <td class="border-no" align="right">{{ $currency }}{{ number_format ($sale -> net, 2) }}</td>
                         </tr>
                         </tfoot>
                     </table>
