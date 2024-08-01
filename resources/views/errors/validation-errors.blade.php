@@ -26,3 +26,12 @@
         </div>
     </div>
 @endif
+
+@if(session () -> has ('Invalidcouponcode'))
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Invalid coupon code!</h4>
+        <div class="alert-body">
+            {{ session ('Invalidcouponcode') }}
+        </div>
+    </div>
+@endif

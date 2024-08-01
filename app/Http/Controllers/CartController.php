@@ -63,6 +63,8 @@
                 
                 if ( $request -> has ( 'clear-cart' ) ) {
                     Cart ::destroy ();
+                    session()->remove('coupon-code');
+                    session()->remove('coupon-id');
                     return redirect () -> back ();
                 }
                 
@@ -109,10 +111,10 @@
                     return redirect () -> back ();
                 }
                 else
-                    return redirect () -> back () -> with ( 'error', 'Invalid coupon code.' ) -> withInput ();
+                    return redirect () -> back () -> with ( 'Invalidcouponcode', 'Invalid coupon code.' ) -> withInput ();
             }
             catch ( \Exception $exception ) {
-                return redirect () -> back () -> with ( 'error', $exception -> getMessage () );
+                return redirect () -> back () -> with ( 'Invalidcouponcode', $exception -> getMessage () );
             }
         }
 
@@ -122,7 +124,7 @@
            
                 // Check if the cart is empty
             if (Cart::content()->count() != 0) {
-                // Prepare the data for response
+                // Prepare the data for response 
                 $data = [
                     'status' => 'success',
                     'title' => 'Cart',
