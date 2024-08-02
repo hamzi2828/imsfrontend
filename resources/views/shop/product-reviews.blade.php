@@ -143,9 +143,9 @@ $Review_with_login = optional(siteSettings()->settings)->reviews_enable_with_log
             <div class="col-xl-8 col-lg-7 mb-4">
                 <div class="review-form-wrapper">
                     <h3 class="title tab-pane-title font-weight-bold mb-1">
-                        Submit Your Review. . . . 
+                        Submit Your Review
                     </h3>
-                    <form action="{{ route('reviews.store', ['product' => $product->slug]) }}" method="POST" class="review-form">
+                    <form id="review-form" action="{{ route('reviews.store', ['product' => $product->slug]) }}" method="POST" class="review-form">
                         @csrf
                         <div class="rating-form">
                             <label for="rating">Your Rating Of This Product :</label>
@@ -169,16 +169,19 @@ $Review_with_login = optional(siteSettings()->settings)->reviews_enable_with_log
             
                         <div class="row gutter-md">
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="author" placeholder="Your Name" id="author">
+                                <input type="text" class="form-control" name="author" placeholder="Your Name" id="author" required>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="email" placeholder="Your Email" id="email">
+                                <input type="text" class="form-control" name="email" placeholder="Your Email" id="email" required>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-dark">Submit Review</button>
                     </form>
                 </div>
             </div>
+            
+
+            
             
             @else
                 <div class="col-xl-8 col-lg-7 mb-4">
