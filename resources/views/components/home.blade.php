@@ -29,7 +29,9 @@
     </script>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ serverPath (optional (siteSettings () -> settings) -> logo) }}">
+    {{-- {{-- <link rel="icon" type="image/png" href="{{ serverPath (optional (siteSettings () -> settings) -> logo) }}"> --}}
+    <link rel="icon" type="image/png" href="{{ asset('/assets/favicon.png') }}">
+    
     
     <!-- WebFont.js -->
     <script>
