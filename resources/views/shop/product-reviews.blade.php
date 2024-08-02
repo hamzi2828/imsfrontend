@@ -235,7 +235,15 @@ $Review_with_login = optional(siteSettings()->settings)->reviews_enable_with_log
                                 <div class="comment-body">
                                     <div class="comment-content">
                                         <h4 class="comment-author">
-                                            <a href="#">{{ $review -> user ?-> name }}</a>
+                                            <a href="#">
+                                                @if ($review->user_id )
+                                                 {{ $review -> user ?-> name }}
+                                                @endif
+                                                @if($review -> user_id == 0)
+                                                {{ $review ->user_name }}
+                                                @endif
+
+                                            </a>
                                             <span class="comment-date">
                                                 {{ $review -> created_at -> diffForHumans() }}
                                             </span>
