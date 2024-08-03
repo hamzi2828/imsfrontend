@@ -1,96 +1,67 @@
 
 @php
-$Review_with_login = optional(siteSettings()->settings)->reviews_enable_with_login;
+            $Review_with_login = optional(siteSettings()->settings)->reviews_enable_with_login;
 
-
-@endphp
-
+                $averageRating = $product->reviews->avg('rating');
+                $totalReviews = $product->reviews->count();
+                $recommendedCount = $product->reviews->where('rating', '>=', 4)->count();
+                $recommendedPercentage = $totalReviews > 0 ? ($recommendedCount / $totalReviews) * 100 : 0;
+    
+            $totalReviews = $product->reviews->count();
+            $ratings = [
+                5 => $product->reviews->where('rating', 5)->count(),
+                4 => $product->reviews->where('rating', 4)->count(),
+                3 => $product->reviews->where('rating', 3)->count(),
+                2 => $product->reviews->where('rating', 2)->count(),
+                1 => $product->reviews->where('rating', 1)->count(),
+            ];
+        @endphp
+        
 <div class="tab-pane" id="product-tab-reviews">
     <div class="row mb-4">
 
-        <div class="col-xl-4 col-lg-5 mb-4">
+        <div class="col-xl-4 col-lg-5 mb-4"> 
             <div class="ratings-wrapper">
-                <div class="avg-rating-container">
-                    <h4 class="avg-mark font-weight-bolder ls-50">3.3</h4>
-                    <div class="avg-rating">
-                        <p class="text-dark mb-1">Average Rating</p>
-                        <div class="ratings-container">
-                            <div class="ratings-full">
-                                <span class="ratings" style="width: 60%;"></span>
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <a href="#" class="rating-reviews">(3 Reviews)</a>
+    
+            
+            <div class="avg-rating-container">
+                <h4 class="avg-mark font-weight-bolder ls-50">{{ number_format($averageRating, 1) }}</h4>
+                <div class="avg-rating">
+                    <p class="text-dark mb-1">Average Rating</p>
+                    <div class="ratings-container">
+                        <div class="ratings-full">
+                            <span class="ratings" style="width: {{ ($averageRating / 5) * 100 }}%;"></span>
+                            <span class="tooltiptext tooltip-top"></span>
                         </div>
+                        <a href="#" class="rating-reviews">{{ $totalReviews }} (Reviews)</a>
                     </div>
                 </div>
-                <div
-                    class="ratings-value d-flex align-items-center text-dark ls-25">
-                    <span
-                        class="text-dark font-weight-bold">66.7%</span>Recommended<span
-                        class="count">(2 of 3)</span>
-                </div>
-                <div class="ratings-list">
-                    <div class="ratings-container">
-                        <div class="ratings-full">
-                            <span class="ratings" style="width: 100%;"></span>
-                            <span class="tooltiptext tooltip-top"></span>
-                        </div>
-                        <div class="progress-bar progress-bar-sm ">
-                            <span></span>
-                        </div>
-                        <div class="progress-value">
-                            <mark>70%</mark>
-                        </div>
+            </div>
+            <div class="ratings-value d-flex align-items-center text-dark ls-25">
+                <span class="text-dark font-weight-bold">{{ number_format($recommendedPercentage, 1) }}%</span> Recommended
+                <span class="count">({{ $recommendedCount }} of {{ $totalReviews }})</span>
+            </div>
+    
+        <div class="ratings-list">
+            @foreach($ratings as $rating => $count)
+                @php
+                    $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+                @endphp
+                <div class="ratings-container">
+                    <div class="ratings-full">
+                        <span class="ratings" style="width: {{ $rating * 20 }}%;"></span>
+                        <span class="tooltiptext tooltip-top"></span>
                     </div>
-                    <div class="ratings-container">
-                        <div class="ratings-full">
-                            <span class="ratings" style="width: 80%;"></span>
-                            <span class="tooltiptext tooltip-top"></span>
-                        </div>
-                        <div class="progress-bar progress-bar-sm ">
-                            <span></span>
-                        </div>
-                        <div class="progress-value">
-                            <mark>30%</mark>
-                        </div>
+                    <div class="progress-bar progress-bar-sm ">
+                        <span style="width: {{ $percentage }}%;"></span>
                     </div>
-                    <div class="ratings-container">
-                        <div class="ratings-full">
-                            <span class="ratings" style="width: 60%;"></span>
-                            <span class="tooltiptext tooltip-top"></span>
-                        </div>
-                        <div class="progress-bar progress-bar-sm ">
-                            <span></span>
-                        </div>
-                        <div class="progress-value">
-                            <mark>40%</mark>
-                        </div>
-                    </div>
-                    <div class="ratings-container">
-                        <div class="ratings-full">
-                            <span class="ratings" style="width: 40%;"></span>
-                            <span class="tooltiptext tooltip-top"></span>
-                        </div>
-                        <div class="progress-bar progress-bar-sm ">
-                            <span></span>
-                        </div>
-                        <div class="progress-value">
-                            <mark>0%</mark>
-                        </div>
-                    </div>
-                    <div class="ratings-container">
-                        <div class="ratings-full">
-                            <span class="ratings" style="width: 20%;"></span>
-                            <span class="tooltiptext tooltip-top"></span>
-                        </div>
-                        <div class="progress-bar progress-bar-sm ">
-                            <span></span>
-                        </div>
-                        <div class="progress-value">
-                            <mark>0%</mark>
-                        </div>
+                    <div class="progress-value">
+                        <mark>{{ number_format($percentage, 1) }}%</mark>
                     </div>
                 </div>
+            @endforeach
+        </div>
+        
             </div>
         </div>
 

@@ -1,3 +1,4 @@
+
 <x-home :title="$title">
     @push('styles')
         <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/style.min.css') }}">
@@ -30,7 +31,7 @@
                                                 </figure>
                                             </div>
                                             @if(count ($product -> product_images) > 0)
-                                                @foreach($product -> product_images as $image)
+                                                 @foreach($product -> product_images as $image)
                                                     <div class="swiper-slide">
                                                         <figure class="product-image">
                                                             <img src="{{ $image -> image }}"
@@ -172,7 +173,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                         <div class="tab tab-nav-boxed tab-nav-underline product-tabs">
                             <ul class="nav nav-tabs" role="tablist">
