@@ -1,10 +1,11 @@
 <x-home :title="$title">
     @push('styles')
         <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/demo1.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/path-to-magnific-popup/magnific-popup.css') }}">
     @endpush
     @include('partials._topbar')
     
-    <!-- Start of Main-->
+    <!-- Start of Main -->
     <main class="main">
         
         @include('_slider')
@@ -66,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <!-- End of Iocn Box Wrapper -->
+            <!-- End of Icon Box Wrapper -->
             
             <div class="row category-banner-wrapper appear-animate pt-6 pb-8">
                 <div class="col-md-6 mb-4">
@@ -124,13 +125,16 @@
             
             @include('category-wise-products')
             
-{{--            @include('blog')--}}
+            {{--   @include('blog')--}}
             <!-- Post Wrapper -->
             
             @include('recent-views', ['products' => $products])
-            <!-- End of Reviewed Producs -->
+            <!-- End of Reviewed Products -->
         </div>
-        <!--End of Catainer -->
+        <!-- End of Container -->
+
+        @include('popup')
+
     </main>
     <!-- End of Main -->
     
