@@ -14,6 +14,7 @@
     use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\Mail;
     use Illuminate\Support\Facades\Notification;
+    use App\Models\Newsletter;
     
     class ContactUsController extends Controller {
         
@@ -36,6 +37,16 @@
         
         public function newsletter ( NewsletterFormRequest $request ) {
             try {
+                  // Get the user's IP address
+                     $ip = $request->ip();
+
+                // Create a new newsletter record with the IP address
+                $newsletter = Newsletter::create([
+                    'email' => $request->input('email'),
+                    'auth' => false, // Set default value or based on logic
+                    'ip' => $ip,
+                ]);
+              
                 Notification ::route ( 'mail', siteSettings () -> settings -> email ) -> notify ( new NewsletterNotification() );
                 Cache ::rememberForever ( 'newsletter-' . $request -> ip (), fn () => 'true' );
                 return redirect () -> back ();
