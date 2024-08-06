@@ -41,6 +41,46 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100">Sign In</button>
                                 </form>
+
+                                    <!-- Social Media Icons Section -->
+                        {{-- <div class="social-icons social-no-color border-thin mt-4 d-flex justify-content-center"> --}}
+                           @php $settings = siteSettings () @endphp
+                            <div class="social-icons social-no-color border-thin mt-4 d-flex justify-content-center">
+                                @if(!empty(trim (optional ($settings -> settings) -> facebook)))
+                                    <a href="{{ optional (siteSettings () -> settings) -> facebook }}"
+                                       class="social-icon social-facebook w-icon-facebook"></a>
+                                @endif
+                                
+                                @if(!empty(trim (optional ($settings -> settings) -> twitter)))
+                                    <a href="{{ optional (siteSettings () -> settings) -> twitter }}"
+                                       class="social-icon social-twitter w-icon-twitter"></a>
+                                @endif
+                                
+                                @if(!empty(trim (optional ($settings -> settings) -> instagram)))
+                                    <a href="{{ optional (siteSettings () -> settings) -> instagram }}"
+                                       class="social-icon social-instagram w-icon-instagram"></a>
+                                @endif
+                                
+                                @if(!empty(trim (optional ($settings -> settings) -> youtube)))
+                                    <a href="{{ optional (siteSettings () -> settings) -> youtube }}"
+                                       class="social-icon social-youtube w-icon-youtube"></a>
+                                @endif
+                                
+                                @if(!empty(trim (optional ($settings -> settings) -> pinterest)))
+                                    <a href="{{ optional (siteSettings () -> settings) -> pinterest }}"
+                                       class="social-icon social-pinterest w-icon-pinterest"></a>
+                                @endif
+                                
+                                @if(!empty(trim (optional ($settings -> settings) -> tiktok)))
+                                    <a href="{{ optional (siteSettings () -> settings) -> tiktok }}"
+                                       class="social-icon social-tiktok w-icon-tiktok">
+                                        <i class="fa-brands fa-tiktok"></i>
+                                    </a>
+                                @endif
+                                
+                            
+                            </div>
+                        
                             </div>
                         </div>
                     </div>

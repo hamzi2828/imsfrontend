@@ -16,7 +16,7 @@
         public function index (): View {
             $data[ 'title' ] = 'Login';
             return view ( 'login.index', $data );
-        }
+        } 
         
         public function authenticate ( LoginRequest $request ): RedirectResponse {
             try {
@@ -24,7 +24,7 @@
                 if ( $user_id > 0 )
                     return redirect () -> intended ( route ( 'users.index' ) );
                 else
-                    return redirect () -> back () -> with ( 'error', 'Invalid Credentials.' );
+                    return redirect () -> back () -> with ( 'login_invalid', 'Invalid Username or Password.' );
             }
             catch ( QueryException | \Exception $exception ) {
                 Log ::info ( $exception );

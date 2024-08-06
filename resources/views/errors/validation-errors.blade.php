@@ -61,6 +61,24 @@
 @endif
 
 
+@if(session () -> has ('login_invalid'))
+
+<div class="col-md-12 mb-4">
+    @if(session('login_invalid'))
+        <div class="alert alert-error alert-bg alert-button alert-block show-code-action">
+            <h4 class="alert-title">Alert</h4>
+            <p>{{ session('login_invalid') }}</p>
+    
+            <button class="btn btn-link btn-close" aria-label="button" onclick="this.closest('.alert').style.display='none';">
+                <i class="fas fa-times"></i> <!-- Font Awesome cross icon -->
+            </button>
+        </div>
+    @endif
+</div>
+
+@endif
+
+
 
 {{-- <div class="col-md-6 mb-4">
     <div class="alert alert-success alert-button show-code-action">

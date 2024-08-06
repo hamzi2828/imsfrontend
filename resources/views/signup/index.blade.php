@@ -50,12 +50,25 @@
                                         <input type="text" class="form-control" name="address" id="address"
                                                required="required">
                                     </div>
+
+                                    <div class="form-group d-flex">
+                                        <input class="mr-2" type="checkbox" id="privacyPolicy" name="privacyPolicy" required>
+                                        <label for="privacyPolicy">I agree to the <a href="{{ route ('pages.index', ['page' => 'privacy-policy']) }}" target="_blank">privacy policy</a> *</label>
+                                    </div>
+
+
                                     <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                                     <div class="form-checkbox d-flex align-items-center justify-content-end">
                                         Already have an account?
                                         <a href="{{ route ('login') }}" style="margin-left: 5px">Login</a>
                                     </div>
                                 </form>
+
+                                    <script>
+                                        document.getElementById('privacyPolicy').addEventListener('change', function () {
+                                            document.getElementById('submitButton').disabled = !this.checked;
+                                        });
+                                    </script>
                             </div>
                         </div>
                     </div>
