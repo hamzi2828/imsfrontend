@@ -9,7 +9,7 @@
     background-position: center;
     background-size: cover;
     border-radius: 1rem;
-    background-image: url(../../assets/images/newsletter-1.jpg);
+    background-image: url(../../assets/images/newsletter-11.png);
     position: fixed; /* Position fixed for popup */
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
@@ -53,6 +53,7 @@
     min-height: 4.4rem;
     border-color: #ccc;
     color: #666;
+    
   }
   
   .newsletter-popup .input-wrapper-inline .btn {
@@ -82,23 +83,50 @@
 </style>
 
 <!-- Start of Newsletter popup -->
-  <div class="newsletter-popup">
-    <div class="newsletter-content">
-        <button class="close-popup">×</button> <!-- Close button -->
-        <h4 class="text-uppercase font-weight-normal ls-25">Get Up to<span class="text-primary">25% Off</span></h4>
-        <h2 class="ls-25">Sign up to Wolmart</h2>
-        <p class="text-light ls-10">Subscribe to the Wolmart market newsletter to receive updates on special offers.</p>
-        <form action="#" method="get" class="input-wrapper input-wrapper-inline input-wrapper-round">
-            <input type="email" class="form-control email font-size-md" name="email" id="email2" placeholder="Your email address" required="">
-            <button class="btn btn-dark" type="submit">SUBMIT</button>
-        </form>
-        <div class="form-checkbox d-flex align-items-center">
-            <input type="checkbox" class="custom-checkbox" id="hide-newsletter-popup" name="hide-newsletter-popup">
-            <label for="hide-newsletter-popup" class="font-size-sm text-light">Don't show this popup again.</label>
-        </div>
-    </div>
+<div class="newsletter-popup">
+  <div class="newsletter-content">
+      <button class="close-popup">×</button> <!-- Close button -->
+      <!-- Display Newsletter Image -->
+      @if(!empty($banners->newsletter_image))
+          <div class="newsletter-image mb-4">
+              <img src="{{ asset($banners->newsletter_image) }}" alt="Newsletter Image" style="max-width: 100%; height: auto;">
+          </div>
+      @endif
+      <!-- Display Newsletter Title -->
+      <h4 class="text-uppercase font-weight-normal ls-25">
+          {{ $banners->newsletter_title ?? 'Get Up to 25% Off' }}
+      </h4>
+      <!-- Display Newsletter Subtitle -->
+      <h2 class="ls-25">
+          {{ $banners->newsletter_subtitle ?? 'Subscribe to the Wolmart newsletter' }}
+      </h2>
+      <!-- Display Newsletter Description -->
+      <p class="text-light ls-10">
+          {{ $banners->newsletter_description ?? 'Subscribe to the  newsletter to receive updates on special offers.' }}
+      </p>
+      {{-- <form action="#" method="get" class="input-wrapper input-wrapper-inline input-wrapper-round">
+          <input type="email" class="form-control email font-size-md" name="email" id="email2" placeholder="Your email address" required="">
+          <button class="btn btn-dark" type="submit">SUBMIT</button>
+      </form> --}}
+
+      <form action="{{ route ('newsletter') }}" method="post"
+          class="input-wrapper input-wrapper-inline input-wrapper-round">
+        @csrf
+        <input type="email" class="form-control email font-size-md " name="email" id="email"
+              placeholder="Your E-mail Address" />
+        <button class="btn btn-dark btn-rounded" type="submit">Subscribe
+         </button>
+    </form>
+
+
+      <div class="form-checkbox d-flex align-items-center">
+          <input type="checkbox" class="custom-checkbox" id="hide-newsletter-popup" name="hide-newsletter-popup">
+          <label for="hide-newsletter-popup" class="font-size-sm text-light">Don't show this popup again.</label>
+      </div>
+  </div>
 </div>
 <!-- End of Newsletter popup -->
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

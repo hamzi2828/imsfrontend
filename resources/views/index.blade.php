@@ -133,7 +133,8 @@
         </div>
         <!-- End of Container -->
 
-        @include('popup')
+        @include('popup', ['banners' => $banners])
+
 
     </main>
     <!-- End of Main -->
