@@ -28,10 +28,49 @@
 @endif
 
 @if(session () -> has ('Invalidcouponcode'))
-    <div class="alert alert-danger" role="alert">
+
+
+<div class="col-md-8 mb-4">
+    <div class="alert alert-warning alert-button show-code-action">
+        <a href="#" class="btn btn-warning btn-rounded">Alert</a>
+        {{ session ('Invalidcouponcode') }}
+
+    </div>
+
+</div>
+
+
+    {{-- <div class="alert alert-danger" role="alert">
         <h4 class="alert-heading">Invalid coupon code!</h4>
         <div class="alert-body">
             {{ session ('Invalidcouponcode') }}
         </div>
-    </div>
+    </div> --}}
 @endif
+
+
+@if(session () -> has ('review_submitted'))
+
+<div class="col-md-8 mb-4">
+    <div class="alert alert-success alert-button show-code-action">
+        <a href="#" class="btn btn-success btn-rounded">Well Done</a>
+        {{ session ('review_submitted') }}
+
+    </div>
+</div>
+@endif
+
+
+
+{{-- <div class="col-md-6 mb-4">
+    <div class="alert alert-success alert-button show-code-action">
+        <a href="#" class="btn btn-success btn-rounded">Well Done</a>
+        You successfully read this important alert message.
+    </div>
+</div>
+<div class="col-md-6 mb-4">
+    <div class="alert alert-warning alert-button show-code-action">
+        <a href="#" class="btn btn-warning btn-rounded">Warning</a>
+        Best check yourself, you're not looking too good.
+    </div>
+</div> --}}

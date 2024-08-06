@@ -149,7 +149,7 @@
                                                     </div>
                                                     <button class="btn btn-primary"
                                                             onclick="addToCart(this, '{{ route ('cart.store', ['product' => $product -> slug]) }}', {{ $product -> available_quantity() }})">
-                                                        <i class="w-icon-cart"></i>
+                                                        <i class="w-icon-cart mr-2"></i>
                                                         <span>Add to Cart</span>
                                                     </button>
                                                 </div>
@@ -166,6 +166,42 @@
                                     @endif
                                     
                                     <div class="social-links-wrapper">
+                                        <div class="social-links">
+                                            <div class="social-icons social-no-color border-thin">
+                                                <!-- Facebook -->
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" 
+                                                   target="_blank" 
+                                                   class="social-icon social-facebook w-icon-facebook" 
+                                                   title="Share on Facebook"></a>
+                                                
+                                                <!-- Twitter -->
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($product->title()) }}" 
+                                                   target="_blank" 
+                                                   class="social-icon social-twitter w-icon-twitter" 
+                                                   title="Share on Twitter"></a>
+                                                
+                                                <!-- Pinterest -->
+                                                <a href="https://pinterest.com/pin/create/button/?url={{ urlencode(url()->current()) }}&media={{ urlencode($product->image) }}&description={{ urlencode($product->title()) }}" 
+                                                   target="_blank" 
+                                                   class="social-icon social-pinterest fab fa-pinterest-p" 
+                                                   title="Share on Pinterest"></a>
+                                                
+                                                <!-- WhatsApp -->
+                                                <a href="https://api.whatsapp.com/send?text={{ urlencode($product->title()) }}%20{{ urlencode(url()->current()) }}" 
+                                                   target="_blank" 
+                                                   class="social-icon social-whatsapp fab fa-whatsapp" 
+                                                   title="Share on WhatsApp"></a>
+                                                
+                                                <!-- LinkedIn -->
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(url()->current()) }}" 
+                                                   target="_blank" 
+                                                   class="social-icon social-linkedin fab fa-linkedin-in" 
+                                                   title="Share on LinkedIn"></a>
+                                            </div>
+                                              
+                                        </div>
+                                        
+
                                         <div class="product-link-wrapper d-flex">
                                             <a href="javascript:void(0)" id="wishlist-{{ $product -> id }}"
                                                onclick="addToWishList('{{ route ('products.add-to-wishlist', ['product' => $product -> slug]) }}')"
@@ -248,4 +284,6 @@
         </div>
         <!-- End of Page Content -->
     </main>
+    @include('partials._footer')
+
 </x-home>

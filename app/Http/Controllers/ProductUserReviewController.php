@@ -26,7 +26,7 @@
                 }
                 DB ::commit ();
                 
-                return redirect () -> back () -> with ( 'status', 'Your review has been sent for review.' );
+                return redirect () -> back () -> with ( 'review_submitted', 'Your review has been received Thank you.' );
                 
             }
             catch ( QueryException | \Exception $exception ) {

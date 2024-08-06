@@ -309,7 +309,21 @@
                                     @endif
                                 @endforeach
                             @endif
-
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    // Check if 'view' parameter is not already set in the URL
+                                    const urlParams = new URLSearchParams(window.location.search);
+                                    let view = urlParams.get('view');
+                                
+                                    // If 'view' parameter is not present, set it to 'grid' and redirect
+                                    if (!view) {
+                                        // Update the URL to include the 'view=grid' parameter
+                                        urlParams.set('view', 'grid');
+                                        window.location.search = urlParams.toString();
+                                    }
+                                });
+                                </script>
+                                
                         </div>
                         <div class="toolbox toolbox-pagination justify-content-between">
                             {!! $products->onEachSide(5)->appends(request()->query())->links('shop.pagination') !!}

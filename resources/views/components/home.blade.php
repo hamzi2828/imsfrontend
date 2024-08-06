@@ -81,7 +81,7 @@
 <style>
 
 
-@media (max-width: 767px) {
+@media (max-width: 767px) { 
     .scroll-top {
         display: flex !important;
         justify-content: center;

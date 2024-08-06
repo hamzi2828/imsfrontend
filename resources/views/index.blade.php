@@ -5,7 +5,7 @@
     @endpush
     @include('partials._topbar')
     
-    <!-- Start of Main -->
+    <!-- Start of Main --> 
     <main class="main">
         
         @include('_slider')
