@@ -1,7 +1,7 @@
 <style>
 .newsletter-popup {
-    display: none; /* Start hidden and show with JavaScript */
-    flex-direction: column; /* Ensure content is stacked vertically */
+  position: relative;
+  z-index: 30;
     width: 72rem !important;
     max-width: 78rem;
     padding: 8.1rem 4.8rem;
@@ -10,10 +10,10 @@
     background-size: cover;
     border-radius: 1rem;
     background-image: url(../../assets/images/newsletter-11.png);
-    position: fixed; /* Position fixed for popup */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Centering adjustment */
+    /* position: fixed; /* Position fixed for popup */
+    /* top: 50%; Center vertically */
+    /* left: 50%; Center horizontally */
+    /* transform: translate(-50%, -50%); Centering adjustment */ */
     z-index: 9999; /* Ensure it's above other content */
   }
   
@@ -78,7 +78,30 @@
     font-size: 2rem;
     cursor: pointer;
   }
-  
+
+  .newsletter-popup-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .newsletter-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); 
+    z-index: 20;/* Semi-transparent background */
+    /* backdrop-filter: blur(5px); Apply blur effect */
+  }
   /* .main {
     filter: blur(5px);
     pointer-events: none;
@@ -92,54 +115,52 @@
 
 @if($display_popup === 'yes')
 <!-- Start of Newsletter popup -->
-<div class="newsletter-popup">
-  <div class="newsletter-content">
-      <button class="close-popup">×</button> <!-- Close button -->
-      <!-- Display Newsletter Image -->
-      @if(!empty($banners->newsletter_image))
-          <div class="newsletter-image mb-4">
-              <img src="{{ asset($banners->newsletter_image) }}" alt="Newsletter Image" style="max-width: 100%; height: auto;">
-          </div>
-      @endif
-      <!-- Display Newsletter Title -->
-      <h4 class="text-uppercase font-weight-normal ls-25">
-          {{ $banners->newsletter_title ?? 'Get Up to 25% Off' }}
-      </h4>
-      <!-- Display Newsletter Subtitle -->
-      <h2 class="ls-25">
-          {{ $banners->newsletter_subtitle ?? 'Subscribe to the Wolmart newsletter' }}
-      </h2>
-      <!-- Display Newsletter Description -->
-      <p class="text-light ls-10">
-          {{ $banners->newsletter_description ?? 'Subscribe to the  newsletter to receive updates on special offers.' }}
-      </p>
-      {{-- <form action="#" method="get" class="input-wrapper input-wrapper-inline input-wrapper-round">
-          <input type="email" class="form-control email font-size-md" name="email" id="email2" placeholder="Your email address" required="">
-          <button class="btn btn-dark" type="submit">SUBMIT</button>
-      </form> --}}
+<div class="newsletter-popup-wrapper">
+  <!-- Backdrop Overlay -->
+  <div class="newsletter-backdrop"></div>
 
-      <form action="{{ route ('newsletter') }}" method="post"
-          class="input-wrapper input-wrapper-inline input-wrapper-round">
-        @csrf
-        <input type="email" class="form-control email font-size-md " name="email" id="email"
-              placeholder="Your E-mail Address" />
-        <button class="btn btn-dark btn-rounded" type="submit">Subscribe
-         </button>
-    </form>
-
-
-      <div class="form-checkbox d-flex align-items-center">
-          <input type="checkbox" class="custom-checkbox" id="hide-newsletter-popup" name="hide-newsletter-popup">
-          <label for="hide-newsletter-popup" class="font-size-sm text-light">Don't show this popup again.</label>
-      </div>
+  <div class="newsletter-popup">
+    <div class="newsletter-content">
+        <button class="close-popup">×</button> <!-- Close button -->
+        <!-- Display Newsletter Image -->
+        @if(!empty($banners->newsletter_image))
+            <div class="newsletter-image mb-4">
+                <img src="{{ asset($banners->newsletter_image) }}" alt="Newsletter Image" style="max-width: 100%; height: auto;">
+            </div>
+        @endif
+        <!-- Display Newsletter Title -->
+        <h4 class="text-uppercase font-weight-normal ls-25">
+            {{ $banners->newsletter_title ?? 'Get Up to 25% Off' }}
+        </h4>
+        <!-- Display Newsletter Subtitle -->
+        <h2 class="ls-25">
+            {{ $banners->newsletter_subtitle ?? 'Subscribe to the Wolmart newsletter' }}
+        </h2>
+        <!-- Display Newsletter Description -->
+        <p class="text-light ls-10">
+            {{ $banners->newsletter_description ?? 'Subscribe to the  newsletter to receive updates on special offers.' }}
+        </p>
+  
+        <form action="{{ route('newsletter') }}" method="post" class="input-wrapper input-wrapper-inline input-wrapper-round">
+          @csrf
+          <input type="email" class="form-control email font-size-md" name="email" id="email" placeholder="Your E-mail Address" />
+          <button class="btn btn-dark btn-rounded" type="submit">Subscribe</button>
+        </form>
+  
+        <div class="form-checkbox d-flex align-items-center">
+            <input type="checkbox" class="custom-checkbox" id="hide-newsletter-popup" name="hide-newsletter-popup">
+            <label for="hide-newsletter-popup" class="font-size-sm text-light">Don't show this popup again.</label>
+        </div>
+    </div>
   </div>
 </div>
+
 <!-- End of Newsletter popup -->
 @endif
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var popup = document.querySelector('.newsletter-popup');
+    var popup = document.querySelector('.newsletter-popup-wrapper ');
     var closeButton = document.querySelector('.close-popup');
     var checkbox = document.querySelector('#hide-newsletter-popup');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\HomeSetting;
 use App\Models\ProductVariation;
 use App\Services\CategoryService;
 use App\Services\ManufacturerService;
@@ -26,8 +27,8 @@ class ProductController extends Controller
     // }
 
     public function index(Request $request): View
-    {
-        $title = 'Shop';
+    { 
+        $title = 'Shop'; 
         $productServiceData = (new ProductService())->products($request);
         $products = $productServiceData['products'];
         $displayOutOfStockProducts = $productServiceData['displayOutOfStockProducts'];
@@ -35,7 +36,12 @@ class ProductController extends Controller
         $productPriceRange = (new ProductService())->getPriceRange();
         $productPriceRange = (new ProductService())->displayPriceRanges($productPriceRange->minPrice, $productPriceRange->maxPrice);
         $manufacturers = (new ManufacturerService())->all();
-        return view('shop.index', compact('title', 'products', 'categories', 'productPriceRange', 'manufacturers', 'displayOutOfStockProducts'));
+        $top_categories = collect ( ( new CategoryService() ) -> all () ) -> take ( 6 );
+        $home_settings    = HomeSetting ::first ();
+
+  
+
+        return view('shop.index', compact('title', 'products', 'categories', 'productPriceRange', 'manufacturers', 'displayOutOfStockProducts','top_categories','home_settings'));
     }
 
     public function show(Product $product): View

@@ -4,6 +4,11 @@
     @endpush
     @include('partials._topbar')
     
+    <style>
+        .login-popup .tab-pane a:not(.btn):hover {
+        text-decoration: none;
+         }
+    </style>
     <main class="main login-page">
         <!-- Start of Page Header -->
         <div class="page-header">

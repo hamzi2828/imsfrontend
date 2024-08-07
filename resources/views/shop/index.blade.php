@@ -36,10 +36,91 @@
 
 
 </style>
+
+@php
+    $display_shop_banner = optional(siteSettings()->settings)->display_shop_banner;
+
+
+    $display_shop_categories = optional(siteSettings()->settings)->display_shop_categories;
+@endphp
+
+
+
     <main class="main mt-5">
         <!-- Start of Page Content -->
         <div class="page-content">
             <div class="container">
+                 @if($display_shop_banner === 'yes')
+            <!-- Start of Shop Banner -->
+            <div class="shop-default-banner banner d-flex align-items-center mb-5 br-xs"
+                style="background-image: url({{ asset($home_settings->shop_banner_image ?? 'assets/images/shop/banner1.jpg') }}); background-color: #FFC74E;">
+                <div class="banner-content">
+                    <h4 class="banner-subtitle font-weight-bold">{{ $home_settings->shop_banner_subtitle ?? 'All Collection' }}</h4>
+                    <h3 class="banner-title text-white text-uppercase font-weight-bolder ls-normal">{{ $home_settings->shop_banner_title ?? 'Discover New Collection ' }}</h3>
+                    <a href="{{ $home_settings->shop_banner_link ?? 'shop-banner-sidebar.html' }}" class="btn btn-dark btn-rounded btn-icon-right">
+                        {{ $home_settings->shop_banner_button_text ?? 'Discover Now' }}<i class="w-icon-long-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- End of Shop Banner -->
+
+               @endif
+
+               @if($display_shop_categories === 'yes')
+                 <!-- Start of Shop Category -->
+                <div class="shop-default-category category-ellipse-section mb-6">
+                    <div class="swiper-container swiper-theme shadow-swiper"
+                        data-swiper-options="{
+                        'spaceBetween': 20,
+                        'slidesPerView': 2,
+                        'breakpoints': {
+                            '480': {
+                                'slidesPerView': 3
+                            },
+                            '576': {
+                                'slidesPerView': 4
+                            },
+                            '768': {
+                                'slidesPerView': 6
+                            },
+                            '992': {
+                                'slidesPerView': 7
+                            },
+                            '1200': {
+                                'slidesPerView': 8,
+                                'spaceBetween': 30
+                            }
+                        }
+                    }">
+                        <div class="swiper-wrapper row gutter-lg cols-xl-8 cols-lg-7 cols-md-6 cols-sm-4 cols-xs-3 cols-2">
+                            @if(count ($top_categories) > 0)
+                            @foreach($top_categories as $category)
+
+                            <div class="swiper-slide category-wrap">
+                                <div class="category category-ellipse">
+                                    <figure class="category-media">
+                                        <a href="{{ route ('products.index', ['category' => $category -> slug]) }}">
+                                            <img src="{{ serverPath ($category -> image) }}" alt="Categroy"
+                                                width="190" height="190" style="background-color: #5C92C0;" />
+                                        </a>
+                                    </figure>
+                                    <div class="category-content">
+                                        <h4 class="category-name">
+                                            <a href="{{ route ('products.index', ['category' => $category -> slug]) }}">{{ $category -> title }}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                      @endif
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+                <!-- End of Shop Category -->           
+                @endif
+
+
                 <!-- Start of Shop Content -->
                 <div class="shop-content row gutter-lg mb-10">
                     <!-- Start of Sidebar, Shop Sidebar -->
@@ -60,80 +141,6 @@
                                 <!-- Start of Collapsible widget -->
                                 <div class="widget widget-collapsible">
                                     <h3 class="widget-title"><span>All Categories</span></h3>
-
-
-                                    {{-- <ul class="widget-body filter-items search-ul">
-                                        @php $existingParams = request()->query(); @endphp
-                                        @if (count($categories) > 0)
-                                            @foreach ($categories as $category)
-                                                @if ($category->parent_id == null)
-                                                    @php $queryParams = array_merge($existingParams, ['category' => $category->slug]); @endphp
-                                                    <li style="{{ request('category') == $category->slug ? 'font-weight: 700' : '' }}">
-                                                        <a href="{{ route('products.index', $queryParams) }}">
-                                                            {{ $category->title }}
-                                                        </a>
-                                                        @if ($category->subcategories->count() > 0)
-                                                            <ul>
-                                                                @foreach ($category->subcategories as $subCategory)
-                                                                    @php $subQueryParams = array_merge($existingParams, ['category' => $subCategory->slug]); @endphp
-                                                                    <li style="{{ request('category') == $subCategory->slug ? 'font-weight: 700' : '' }}">
-                                                                        <a href="{{ route('products.index', $subQueryParams) }}">
-                                                                            {{ $subCategory->title }}
-                                                                        </a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        @endif
-                                                    </li>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </ul> --}}
-                                    {{-- <ul class="widget-body filter-items search-ul">
-                                        @php $existingParams = request()->query(); @endphp
-                                        @if (count($categories) > 0)
-                                            @foreach ($categories as $category)
-                                                @if ($category->parent_id == null)
-                                                    @php $queryParams = array_merge($existingParams, ['category' => $category->slug]); @endphp
-                                                    <li style="{{ request('category') == $category->slug ? 'font-weight: 700' : '' }}">
-                                                        <a href="{{ route('products.index', $queryParams) }}">
-                                                            {{ $category->title }}
-                                                        </a>
-                                                        @if ($category->subcategories->count() > 0)
-                                                            <ul>
-                                                                @foreach ($category->subcategories as $subCategory)
-                                                                    @php $subQueryParams = array_merge($existingParams, ['category' => $subCategory->slug]); @endphp
-                                                                    <li style="{{ request('category') == $subCategory->slug ? 'font-weight: 700' : '' }}">
-                                                                        <a href="{{ route('products.index', $subQueryParams) }}">
-                                                                            {{ $subCategory->title }}
-                                                                        </a>
-                                                                        @if ($subCategory->subcategories->count() > 0)
-                                                                            <ul class="child-ul">
-                                                                                @foreach ($subCategory->subcategories as $childCategory)
-                                                                                    @php $childQueryParams = array_merge($existingParams, ['category' => $childCategory->slug]); @endphp
-                                                                                    <li style="{{ request('category') == $childCategory->slug ? 'font-weight: 700' : '' }}">
-                                                                                        <a href="{{ route('products.index', $childQueryParams) }}">
-                                                                                            {{ $childCategory->title }}
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endforeach
-                                                                            </ul>
-                                                                        @endif
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        @endif
-                                                    </li>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                     --}}
-                                    
-
-
-
-
                                      <ul class="widget-body filter-items search-ul">
                                         @php $existingParams = request()->query(); @endphp
                                         @if (count($categories) > 0)
