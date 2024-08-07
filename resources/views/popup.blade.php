@@ -71,7 +71,7 @@
   
   .newsletter-popup .close-popup {
     position: absolute;
-    top: 1rem;
+    top: 1rem; 
     right: 1rem;
     background: transparent;
     border: none;
@@ -79,9 +79,18 @@
     cursor: pointer;
   }
   
-
+  /* .main {
+    filter: blur(5px);
+    pointer-events: none;
+} */
 </style>
 
+
+@php
+    $display_popup = optional(siteSettings()->settings)->display_popup;
+@endphp
+
+@if($display_popup === 'yes')
 <!-- Start of Newsletter popup -->
 <div class="newsletter-popup">
   <div class="newsletter-content">
@@ -126,7 +135,7 @@
   </div>
 </div>
 <!-- End of Newsletter popup -->
-
+@endif
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -139,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.style.display = 'none';
     } else {
         popup.style.display = 'flex';
+        popup.classList.add('blurred-background');
     }
 
     // Close button functionality
