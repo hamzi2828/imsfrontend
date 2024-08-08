@@ -8,6 +8,10 @@
         .megamenu > li {
             flex : 50% !important;
         }
+        .w-icon-angle-right:before{
+            font-size: 11px;
+        }
+        
     </style>
 @endpush
 <div class="header-bottom sticky-content fix-top sticky-header has-dropdown" style="border-bottom: 1px solid #eee">

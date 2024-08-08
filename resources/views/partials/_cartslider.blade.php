@@ -8,7 +8,8 @@
     
     .dropdown-box {
         /* Adjust height as needed */
-        overflow-y: auto; /* Enable scrolling */
+        /* agar isue hoa to return krna ha  */
+        /* overflow-y: auto;  */
         display: flex;
         flex-direction: column;
     }

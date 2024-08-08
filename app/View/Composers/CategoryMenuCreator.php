@@ -4,7 +4,7 @@
     
     use App\Services\CategoryService;
     use Illuminate\View\View;
-    
+     
     class CategoryMenuCreator {
         
         public function compose ( View $view ): void {

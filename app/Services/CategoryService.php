@@ -156,16 +156,15 @@
                             break; // Stop after 12 iterations
                         }
 
-                        $html .= '<li>';
-                        $html .= '<a href="' . route('products.index', ['category' => $category->slug]) . '">';
+                        $html .= '<li class=" d-flex align-items-center justify-content-between">';
+                        $html .= '<a class="w-100" href="' . route('products.index', ['category' => $category->slug]) . '">';
                         $html .= '<i class="' . $category->icon . '"></i>' . $category->title;
-                        
-                        if (count($category->subcategories) > 0) {
-                            $html .= '<i class="w-icon-angle-right ms-auto"></i>'; 
-                        }
-                        
+                     
                         $html .= '</a>';
                         
+                        if (count($category->subcategories) > 0) {
+                            $html .= '<i class="w-icon-angle-right  fs-5 "></i>'; 
+                        }
 
                         if (count($category->subcategories) > 0) {
                             $html .= $this->subMenu($category);

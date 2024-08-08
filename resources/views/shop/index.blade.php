@@ -100,7 +100,7 @@
                                 <div class="category category-ellipse">
                                     <figure class="category-media">
                                         <a href="{{ route ('products.index', ['category' => $category -> slug]) }}">
-                                            <img src="{{ serverPath ($category -> image) }}" alt="Categroy"
+                                            <img src="{{ serverPath ($category -> image) }}" style="width: 125px; height: 125px; background-color: #5C92C0; border-radius: 50%  " alt="Categroy"
                                                 width="190" height="190" style="background-color: #5C92C0;" />
                                         </a>
                                     </figure>
