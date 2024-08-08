@@ -4,12 +4,13 @@
   z-index: 30;
     width: 72rem !important;
     max-width: 78rem;
-    padding: 8.1rem 4.8rem;
+    /* padding: 8.1rem 4.8rem; */
     margin: auto;
     background-position: center;
     background-size: cover;
     border-radius: 1rem;
-    background-image: url(../../assets/images/newsletter-11.png);
+    background-color: #fff ;
+    /* background-image: url(../../assets/images/newsletter-11.png); */
     /* position: fixed; /* Position fixed for popup */
     /* top: 50%; Center vertically */
     /* left: 50%; Center horizontally */
@@ -106,6 +107,17 @@
     filter: blur(5px);
     pointer-events: none;
 } */
+
+  .newsletter-content{
+    padding: 8.1rem 4.8rem;
+  }
+
+  @media screen and (max-width: 787px) {
+        .newsletter-image {
+            display: none;
+        }
+
+    }
 </style>
 
 
@@ -123,11 +135,8 @@
     <div class="newsletter-content">
         <button class="close-popup">×</button> <!-- Close button -->
         <!-- Display Newsletter Image -->
-        @if(!empty($banners->newsletter_image))
-            <div class="newsletter-image mb-4">
-                <img src="{{ asset($banners->newsletter_image) }}" alt="Newsletter Image" style="max-width: 100%; height: auto;">
-            </div>
-        @endif
+
+        
         <!-- Display Newsletter Title -->
         <h4 class="text-uppercase font-weight-normal ls-25">
             {{ $banners->newsletter_title ?? 'Get Up to 25% Off' }}
@@ -152,6 +161,19 @@
             <label for="hide-newsletter-popup" class="font-size-sm text-light">Don't show this popup again.</label>
         </div>
     </div>
+
+    <div class="newsletter-image ">
+      @if(!empty($banners->newsletter_image))
+      <div class="newsletter-image">
+          <img src="{{ asset($banners->newsletter_image) }}" alt="Newsletter Image" style="max-width: 100%; height: 100%;">
+      </div>
+      @else
+          <div class="newsletter-image">
+              <img src="https://tjcuk.sirv.com/Products/content/Email-Subscription/Desktop-A.png" alt="Newsletter Image" style="max-width: 100%; height: 100%; object-fit: cover">
+          </div>
+      @endif
+    </div>
+
   </div>
 </div>
 
