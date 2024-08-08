@@ -14,10 +14,35 @@
                 <i class="w-icon-search"></i>
             </button>
         </form>
-        <!-- End of Search Form -->
-
-        {!! $mobilemenu !!}
+    
+        <div class="tab">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a href="#main-menu" class="nav-link active" data-toggle="tab">Main Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#categories" class="nav-link" data-toggle="tab">Categories</a>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="tab-content">
+            <div class="tab-pane active" id="main-menu">
+                <!-- Main Menu Content (if any) -->
+                <ul class="mobile-menu">
+                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="{{ route('products.index') }}">Shop</a></li>
+                    <li><a href="{{ route('pages.index', ['page' => 'about-us']) }}">About Us</a></li>
+                    <li><a href="{{ route('contact-us') }}">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="categories">
+                <!-- Dynamic Categories Menu -->
+                {!! $mobilemenu !!}
+            </div>
+        </div>
     </div>
+    
 </div>
 <!-- End of Mobile Menu -->
 

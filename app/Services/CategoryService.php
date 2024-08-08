@@ -239,6 +239,8 @@
             }
         }
         public function generateMobileMenu($categories): string {
+
+            
             $html = '<ul class="mobile-menu">'; // Start with an unordered list
             
             $count = 0;
