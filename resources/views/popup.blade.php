@@ -113,10 +113,31 @@
   }
 
   @media screen and (max-width: 787px) {
-        .newsletter-image {
-            display: none;
+    .newsletter-popup {
+            max-width: 90%;
+            flex-direction: column;
         }
 
+        .newsletter-image {
+            display: none; /* Hide the image on mobile */
+        }
+
+        .newsletter-content {
+            text-align: center;
+        }
+
+        .input-wrapper {
+            flex-direction: column;
+        }
+
+        .input-wrapper input, .input-wrapper button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .newsletter-popup-wrapper {
+
+          margin-bottom: 100px;
+        }
     }
 </style>
 
@@ -126,6 +147,8 @@
 @endphp
 
 @if($display_popup === 'yes')
+
+
 <!-- Start of Newsletter popup -->
 <div class="newsletter-popup-wrapper">
   <!-- Backdrop Overlay -->
@@ -178,6 +201,7 @@
 </div>
 
 <!-- End of Newsletter popup -->
+
 @endif
 
 <script>
