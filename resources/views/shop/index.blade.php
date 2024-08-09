@@ -288,11 +288,11 @@
                                         </select>
                                     </div>
                                     <div class="toolbox-item toolbox-layout">
-                                        <a href="{{ route('products.index', ['view' => 'grid']) }}"
+                                        <a href="{{ route('products.index', array_merge(request()->query(), ['view' => 'grid'])) }}"
                                             class="icon-mode-grid btn-layout {{ request('view') == 'grid' ? 'active' : '' }}">
                                             <i class="w-icon-grid"></i>
                                         </a>
-                                        <a href="{{ route('products.index', ['view' => 'list']) }}"
+                                        <a href="{{ route('products.index', array_merge(request()->query(), ['view' => 'list'])) }}"
                                             class="icon-mode-list btn-layout {{ request('view') == 'list' || !request('view') ? 'active' : '' }}">
                                             <i class="w-icon-list"></i>
                                         </a>
@@ -345,38 +345,38 @@
     </main>
 
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.widget-body > li').forEach(parentLi => {
-        let parentLink = parentLi.querySelector('a');
-        let childUl = parentLi.querySelector('ul');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.widget-body > li').forEach(parentLi => {
+                let parentLink = parentLi.querySelector('a');
+                let childUl = parentLi.querySelector('ul');
 
-        if (childUl) {
-            // Create arrow element
-            let arrow = document.createElement('span');
-            arrow.className = 'arrow';
-            parentLink.appendChild(arrow);
+                if (childUl) {
+                    // Create arrow element
+                    let arrow = document.createElement('span');
+                    arrow.className = 'arrow';
+                    parentLink.appendChild(arrow);
 
-            // Hide all child ULs initially
-            childUl.style.display = 'none';
+                    // Hide all child ULs initially
+                    childUl.style.display = 'none';
 
-            // Add click event listener
-            parentLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                parentLi.classList.toggle('open');
-                childUl.style.display = childUl.style.display === 'block' ? 'none' : 'block';
-                arrow.classList.toggle('open');
+                    // Add click event listener
+                    parentLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        parentLi.classList.toggle('open');
+                        childUl.style.display = childUl.style.display === 'block' ? 'none' : 'block';
+                        arrow.classList.toggle('open');
+                    });
+
+                    // Open second child by default
+                    let secondChildUl = childUl.querySelector('ul.child-ul');
+                    if (secondChildUl) {
+                        childUl.style.display = 'block'; // Open first level UL
+                        arrow.classList.add('open'); // Add open arrow icon
+                        secondChildUl.style.display = 'block'; // Open second level UL
+                    }
+                }
             });
-
-            // Open second child by default
-            let secondChildUl = childUl.querySelector('ul.child-ul');
-            if (secondChildUl) {
-                childUl.style.display = 'block'; // Open first level UL
-                arrow.classList.add('open'); // Add open arrow icon
-                secondChildUl.style.display = 'block'; // Open second level UL
-            }
-        }
-    });
-});
+        });
 
 
     </script>

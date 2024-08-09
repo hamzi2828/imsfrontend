@@ -272,6 +272,12 @@
                 $count++;
             }
         
+            $html .= '<li>';
+            $html .= '<a href="' . route('products.index') . '" class="font-weight-bold text-primary text-uppercase ls-25" style="padding-left: 0;">';
+            $html .= 'View All Categories<i class="w-icon-angle-right"></i>';
+            $html .= '</a>';
+            $html .= '</li>';
+            
             $html .= '</ul>'; // Close the unordered list
             return $html;
         }
