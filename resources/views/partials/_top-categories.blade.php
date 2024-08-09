@@ -16,13 +16,14 @@
                                 },
                                 '992': {
                                     'slidesPerView': 6
-                                }
+                                } 
                             }
                         }">
                 <div class="swiper-wrapper " id="swiper-wrapper-9310bc3bf24b815310" aria-live="polite"
                      style="transform: translate3d(0px, 0px, 0px);">
                     @if(count ($top_categories) > 0)
                         @foreach($top_categories as $category)
+                        @if($category->parent_id === null && $category->status === 'active' && !$category->trashed())
                             <div class="swiper-slide category category-classic category-absolute overlay-zoom br-xs swiper-slide-active"
                                  role="group" aria-label="1 / 6" style="width: 190px; margin-right: 20px;">
                                 <a href="{{ route ('products.index', ['category' => $category -> slug]) }}"
@@ -38,6 +39,7 @@
                                     </a>
                                 </div>
                             </div>
+                        @endif
                         @endforeach
                     @endif
                 </div>

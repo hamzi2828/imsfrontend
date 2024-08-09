@@ -18,7 +18,7 @@
             </div>
             <button class="btn btn-primary"
                     onclick="addToCart(this, '{{ route ('cart.store', ['product' => $product -> slug]) }}', {{ $product -> available_quantity() }})">
-                <i class="w-icon-cart"></i>
+                <i class="w-icon-cart mr-2"></i>
                 <span>Add to Cart</span>
             </button>
         </div>

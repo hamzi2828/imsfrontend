@@ -53,7 +53,7 @@
                  @if($display_shop_banner === 'yes')
             <!-- Start of Shop Banner -->
             <div class="shop-default-banner banner d-flex align-items-center mb-5 br-xs"
-                style="background-image: url({{ asset($home_settings->shop_banner_image ?? 'assets/images/shop/banner1.jpg') }}); background-color: #FFC74E;">
+                style="background-image: url({{ asset($home_settings->shop_banner_image ?? 'https://d-themes.com/wordpress/wolmart/demo-1/wp-content/uploads/sites/4/2021/04/category-banner-1.jpg') }}); background-color: #FFC74E;">
                 <div class="banner-content">
                     <h4 class="banner-subtitle font-weight-bold">{{ $home_settings->shop_banner_subtitle ?? 'All Collection' }}</h4>
                     <h3 class="banner-title text-white text-uppercase font-weight-bolder ls-normal">{{ $home_settings->shop_banner_title ?? 'Discover New Collection ' }}</h3>
@@ -95,7 +95,7 @@
                         <div class="swiper-wrapper row gutter-lg cols-xl-8 cols-lg-7 cols-md-6 cols-sm-4 cols-xs-3 cols-2">
                             @if(count ($top_categories) > 0)
                             @foreach($top_categories as $category)
-
+                                @if($category->parent_id === null && $category->status === 'active' && !$category->trashed())
                             <div class="swiper-slide category-wrap">
                                 <div class="category category-ellipse">
                                     <figure class="category-media">
@@ -111,6 +111,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         @endforeach
                       @endif
                         </div>

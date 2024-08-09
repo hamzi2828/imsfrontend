@@ -44,7 +44,7 @@
                                                     <a href="{{ $product -> options ?-> route }}">
                                                         <figure>
                                                             <img src="{{ $product -> options ?-> image  }}"
-                                                                alt="product" height="100" style="height: 100px">
+                                                                alt="product" height="100" >
                                                         </figure>
                                                     </a>
                                                     <a href="{{ route ('cart.remove', ['cart' => $product -> rowId]) }}"
@@ -71,9 +71,48 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <input class="form-control" type="number" min="1"
-                                                    max="100000" name="quantity[{{ $product -> rowId }}]"
-                                                    value="{{ $product -> qty }}">
+
+
+                                                <style>
+                                                    .input-group  {
+                                                        max-width: 160px;
+                                                    }
+                                                </style>
+                                                <div class="input-group mb-2">
+                                                   
+                                                    <input class="form-control text-center" type="number" min="1" max="100000"
+                                                           name="quantity[{{ $product->rowId }}]" value="{{ $product->qty }}">
+                                                  
+
+                                                        <button type="button" class="btn btn-outline-secondary btn-plus">+</button>
+                                                    
+                                                        <button type="button" class="btn btn-outline-secondary btn-minus">−</button>
+                                                    
+                                                </div>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                            document.querySelectorAll('.btn-minus').forEach(button => {
+                                                                button.addEventListener('click', function () {
+                                                                    let input = this.closest('.input-group').querySelector('input');
+                                                                    let currentValue = parseInt(input.value);
+                                                                    if (currentValue > parseInt(input.min)) {
+                                                                        input.value = currentValue - 1;
+                                                                    }
+                                                                });
+                                                            });
+
+                                                            document.querySelectorAll('.btn-plus').forEach(button => {
+                                                                button.addEventListener('click', function () {
+                                                                    let input = this.closest('.input-group').querySelector('input');
+                                                                    let currentValue = parseInt(input.value);
+                                                                    if (currentValue < parseInt(input.max)) {
+                                                                        input.value = currentValue + 1;
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+
+                                                </script>
                                             </td>
                                             <td class="product-subtotal" align="center">
                                                 <span class="amount">
